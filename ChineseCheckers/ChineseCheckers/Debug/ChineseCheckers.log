@@ -1,4 +1,0 @@
-﻿  Game.cpp
-C:\Users\Mia Mai\Desktop\ChineseCheckers\Solo-Chinese-Checkers\ChineseCheckers\ChineseCheckers\Globals.h(16,38): warning C4305: 'initializing': truncation from 'double' to 'float'
-C:\Users\Mia Mai\Desktop\ChineseCheckers\Solo-Chinese-Checkers\ChineseCheckers\ChineseCheckers\Game.cpp(16,12): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
-  ChineseCheckers.vcxproj -> C:\Users\Mia Mai\Desktop\ChineseCheckers\Solo-Chinese-Checkers\ChineseCheckers\Debug\ChineseCheckers.exe
