@@ -4,6 +4,7 @@
 #include <SFML/Graphics.hpp>
 #include "Gameplay.h"
 #include "Globals.h"
+#include "Board.h"
 
 
 class Game
@@ -20,7 +21,7 @@ private:
 	void render();
 	void setupAssets();
 	static GameMode m_currentMode;
-
+	Board* m_board;
 	//Font
 	sf::Font m_ArialBlackfont;
 
