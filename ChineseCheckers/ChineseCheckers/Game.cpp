@@ -8,7 +8,9 @@ GameMode Game::m_currentMode{ GameMode::Gameplay };
 
 Game::Game() : m_window{ sf::VideoMode{ SCREEN_WIDTH, SCREEN_HEIGHT, 32 }, "Chinese Checkers by Tom Lloyd and David Whiteford" }, m_exitGame{ false }
 {
+	m_board = new Board();
 	setupAssets();
+	
 }
 
 Game::~Game()
@@ -79,6 +81,7 @@ void Game::render()
 	{
 	case GameMode::Gameplay:
 		m_gameplayScreen.render(m_window);
+		m_board->Draw();
 		break;
 	default:
 		break;
@@ -96,5 +99,6 @@ void Game::setupAssets()
 	}
 
 	m_gameplayScreen.setup(m_ArialBlackfont);
+	m_board->setMap(m_window);
 }
 
