@@ -18,7 +18,11 @@ public:
 		return m_sprites;
 	}
 	void setPosition(sf::Vector2f(t_pos)) { 
-		m_sprites.setPosition(t_pos); 
+		m_piece.setPosition(t_pos); 
+	}
+	sf::Vector2f getPosition()
+	{
+		return m_piece.getPosition();
 	}
 	void draw()
 	{
