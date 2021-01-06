@@ -6,6 +6,10 @@ Board::Board()
 	LoadBoard(lvl1);
 }
 
+Board::~Board()
+{
+}
+
 void Board::LoadBoard(int arr[21][20])
 {
 	for (int row = 0; row < m_boardWidth; row++)
@@ -16,6 +20,7 @@ void Board::LoadBoard(int arr[21][20])
 		}
 	}
 }
+
 
 void Board::Draw()
 {
@@ -65,4 +70,9 @@ void Board::setMap(sf::RenderWindow& t_window)
 			}
 		}
 	}
+}
+
+std::vector<PegHoles*> Board::getBoardHoles() 
+{
+	return m_pegHolesVec;
 }

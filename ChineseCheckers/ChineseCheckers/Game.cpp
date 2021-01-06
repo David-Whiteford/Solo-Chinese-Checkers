@@ -80,8 +80,9 @@ void Game::render()
 	switch (m_currentMode)
 	{
 	case GameMode::Gameplay:
-		m_gameplayScreen.render(m_window);
 		m_board->Draw();
+		m_gameplayScreen.render(m_window);
+		
 		break;
 	default:
 		break;
@@ -97,8 +98,8 @@ void Game::setupAssets()
 	{
 		//std::cout << "problem loading arial Stardust Font" << std::endl;
 	}
-
-	m_gameplayScreen.setup(m_ArialBlackfont);
 	m_board->setMap(m_window);
+	m_gameplayScreen.setup(m_ArialBlackfont,m_window,m_board);
+	
 }
 
