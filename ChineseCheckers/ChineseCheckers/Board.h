@@ -16,6 +16,7 @@ public:
 	void Draw();
 	void init();
 	void setMap(sf::RenderWindow& t_window);
+	std::vector<PegHoles*> getBoardHoles();
 private:
 	sf::Texture m_texture;
 	int m_gameBoard[21][20];
@@ -25,7 +26,7 @@ private:
 	static const int m_mapWidth = 21;
 	static const int m_mapHeigth = 20;
 	std::vector<PegHoles*> m_pegHolesVec;
-	int m_tileSize = 16;
+	int m_tileSize = 20;
 	int lvl1[m_mapWidth][m_mapHeigth] = {
 0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,1,0,1,0,0,0,0,0,0,0,0,0,

@@ -14,16 +14,22 @@ public:
 		m_pegHoles.setPosition(pos);
 		m_pegHoles.setFillColor(sf::Color::White);
 		m_pegHoles.setRadius(10);
-		
-
-	} 
+	}
 	~PegHoles() {}
 	sf::Sprite getSprite() { return m_sprites; }
 	void setPosition(sf::Vector2f(t_pos)) { m_sprites.setPosition(t_pos); }
+	sf::Vector2f getPosition()
+	{
+		return m_pegHoles.getPosition();
+	}
 	void draw() 
 	{ 
 		//m_window.draw(m_sprites);
 		m_window.draw(m_pegHoles);
+	}
+	void setEmpty(bool t_empty)
+	{
+		m_empty = t_empty;
 	}
 	GameObject* myGameObject;
 
@@ -31,5 +37,6 @@ private:
 	sf::CircleShape m_pegHoles;
 	sf::RenderWindow& m_window;
 	sf::Sprite m_sprites;
+	bool m_empty = true;
 
 };

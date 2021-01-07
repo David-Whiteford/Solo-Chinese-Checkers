@@ -10,17 +10,17 @@ GamePlay::~GamePlay()
 
 void GamePlay::update(sf::Time t_deltaTime, sf::RenderWindow& t_window)
 {
-
+	m_player.movePiece(0,0, t_window);
 }
 
 void GamePlay::render(sf::RenderWindow& t_window)
 {
-
+	m_player.draw();
 }
 
-void GamePlay::setup(sf::Font& t_font)
+void GamePlay::setup(sf::Font& t_font, sf::RenderWindow& t_window, Board* t_board)
 {
-
+	m_player.setUpPieces(t_window,t_board);
 }
 
 void GamePlay::initialise()

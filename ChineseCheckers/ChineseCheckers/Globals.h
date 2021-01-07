@@ -9,8 +9,8 @@ enum class  GameMode
 };
 
 
-const static int SCREEN_WIDTH = 400;
-const static int SCREEN_HEIGHT = 400;
+const static int SCREEN_WIDTH = 420;
+const static int SCREEN_HEIGHT = 340;
 const static int MS_PER_UPDATE = 10;
 
 const static float PI = 3.14159265359;
