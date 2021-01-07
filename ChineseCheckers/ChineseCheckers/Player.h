@@ -21,9 +21,10 @@ private:
 	int m_maxPlayerPieces = 10;
 	std::vector<PegHoles*> m_pegHolesVec;
 	int m_pegRadius = 10;
-	int m_pieceIndex = 0;
+	int m_pieceIndex = 11;
 	bool m_pieceHeld = false;
-	
+	bool m_moseButtonReleased = false;
+	int m_currentPress = 0;
 	std::vector<sf::Vector2f> m_initialPos;
 	sf::Vector2f m_mousePos = sf::Vector2f(0,0);
 	sf::Vector2f m_newPiecePos = sf::Vector2f(0, 0);

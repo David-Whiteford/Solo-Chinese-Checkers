@@ -24,13 +24,25 @@ void Player::movePiece(int t_newX, int t_newY, sf::RenderWindow& t_window)
 			&& newMousePos.x < m_playerPieces[i]->getPosition().x + m_pegRadius
 			&& newMousePos.y > m_playerPieces[i]->getPosition().y - m_pegRadius 
 			&& newMousePos.y < m_playerPieces[i]->getPosition().y + m_pegRadius
-			&& m_pieceHeld == false)
+			&& sf::Mouse::isButtonPressed(sf::Mouse::Left) && m_pieceHeld == false)
 		{
 			m_pieceIndex = i;
-			//std::cout << "m_pieceIndex:" << m_pieceIndex << std::endl;
+			m_pieceHeld = true;	
+			std::cout << "Piece Held:" << m_pieceHeld << std::endl;
+			m_moseButtonReleased = false;
+			m_currentPress++;
+		}
+		else if (sf::Mouse::isButtonPressed(sf::Mouse::Left) == false)
+		{
+			m_pieceHeld = false;
+			if (m_currentPress == 1)
+			{
+				m_moseButtonReleased = true;
+				m_currentPress = 0;
+			}
 		}
 	}
-	if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
+	if (m_pieceHeld)
 	{
 		m_playerPieces[m_pieceIndex]->setPosition(newMousePos);
 		for (int i = 0; i < m_pegHolesVec.size(); i++)
@@ -41,12 +53,35 @@ void Player::movePiece(int t_newX, int t_newY, sf::RenderWindow& t_window)
 				&& newMousePos.y - m_pegRadius < m_pegHolesVec[i]->getPosition().y + m_pegRadius)
 			{
 				m_newPiecePos = m_pegHolesVec[i]->getPosition();
-				m_newPosFound = true;
+			}
+		}
+	}
+	else if(m_moseButtonReleased)
+	{
+		m_playerPieces[m_pieceIndex]->setPosition(m_newPiecePos);
+	}
+	/*if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
+	{
+		m_playerPieces[m_pieceIndex]->setPosition(newMousePos);
+		for (int i = 0; i < m_pegHolesVec.size(); i++)
+		{
+			if (newMousePos.x + m_pegRadius > m_pegHolesVec[i]->getPosition().x - m_pegRadius
+				&& newMousePos.x - m_pegRadius < m_pegHolesVec[i]->getPosition().x + m_pegRadius
+				&& newMousePos.y + m_pegRadius > m_pegHolesVec[i]->getPosition().y - m_pegRadius
+				&& newMousePos.y - m_pegRadius < m_pegHolesVec[i]->getPosition().y + m_pegRadius)
+			{
+				m_newPiecePos = m_pegHolesVec[i]->getPosition();
+				
 
 			}
 		}
 		m_pieceHeld = true;
 	}
+	else
+	{
+		m_playerPieces[m_pieceIndex]->setPosition(newMousePos);
+		m_pieceHeld = false;
+	}*/
 
 	std::cout << "m_pieceHeld: " << m_pieceHeld << std::endl;
 }
