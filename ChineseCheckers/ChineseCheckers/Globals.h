@@ -1,16 +1,26 @@
-
 #pragma once
 #ifndef GLOBALS
 #define GLOBALS
 
 enum class  GameMode
 {
-	Gameplay
+	Splash,
+	Menu,
+	Gameplay,
+	Lose,
+	Win,
+};
+
+enum class Difficulty
+{
+	Easy,
+	Medium,
+	Hard
 };
 
 
-const static int SCREEN_WIDTH = 420;
-const static int SCREEN_HEIGHT = 340;
+const static int SCREEN_WIDTH = 620;
+const static int SCREEN_HEIGHT = 440;
 const static int MS_PER_UPDATE = 10;
 
 const static float PI = 3.14159265359;

@@ -1,14 +1,11 @@
 #include "Game.h"
-#include <SFML\Graphics.hpp>
-#include <iostream>
-#include "Gameplay.h"
-#include "Globals.h"
 
-GameMode Game::m_currentMode{ GameMode::Gameplay };
+GameMode Game::m_currentMode{ GameMode::Splash };
+Difficulty Game::m_difficulty{ Difficulty::Easy };
 
 Game::Game() : m_window{ sf::VideoMode{ SCREEN_WIDTH, SCREEN_HEIGHT, 32 }, "Chinese Checkers by Tom Lloyd and David Whiteford" }, m_exitGame{ false }
 {
-	m_board = new Board();
+	//m_board = new Board();
 	setupAssets();
 	
 }
@@ -60,8 +57,20 @@ void Game::update(sf::Time t_deltaTime)
 {
 	switch (m_currentMode)
 	{
+	case GameMode::Splash:
+		m_splashScreen.update(t_deltaTime);
+		break;
+	case GameMode::Menu:
+		m_menu.update(t_deltaTime);
+		break;
 	case GameMode::Gameplay:
 		m_gameplayScreen.update(t_deltaTime, m_window);
+		break;
+	case GameMode::Win:
+		m_winScreen.update(t_deltaTime);
+		break;
+	case GameMode::Lose:
+		m_loseScreen.update(t_deltaTime);
 		break;
 	default:
 		break;
@@ -79,10 +88,21 @@ void Game::render()
 
 	switch (m_currentMode)
 	{
+	case GameMode::Splash:
+		m_splashScreen.render(m_window);
+		break;
+	case GameMode::Menu:
+		m_menu.render(m_window);
+		break;
 	case GameMode::Gameplay:
-		m_board->Draw();
+		//m_board->Draw();
 		m_gameplayScreen.render(m_window);
-		
+		break;
+	case GameMode::Win:
+		m_winScreen.render(m_window);
+		break;
+	case GameMode::Lose:
+		m_loseScreen.render(m_window);
 		break;
 	default:
 		break;
@@ -94,12 +114,16 @@ void Game::render()
 void Game::setupAssets()
 {
 	//Setting up Font
-	if (!m_ArialBlackfont.loadFromFile("ASSETS\\FONTS\\Starduster3D-XOvP.otf"))
+	if (!m_ArialBlackfont.loadFromFile("Assets/Fonts/QuickSmart.otf"))
 	{
 		//std::cout << "problem loading arial Stardust Font" << std::endl;
 	}
-	m_board->setMap(m_window);
-	m_gameplayScreen.setup(m_ArialBlackfont,m_window,m_board);
+	//m_board->setMap(m_window);
+	//m_gameplayScreen.setup(m_ArialBlackfont,m_window,m_board);
+	m_splashScreen.setup(m_ArialBlackfont);
+	m_menu.setup(m_ArialBlackfont);
+	m_winScreen.setup(m_ArialBlackfont);
+	m_loseScreen.setup(m_ArialBlackfont);
 	
 }
 

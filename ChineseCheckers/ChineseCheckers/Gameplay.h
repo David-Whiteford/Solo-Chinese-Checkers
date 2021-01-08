@@ -18,5 +18,4 @@ private:
 	sf::Font m_font;
 	Player m_player;
 
-
 };
