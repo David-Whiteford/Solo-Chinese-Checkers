@@ -11,8 +11,11 @@ public:
 
 	virtual ~GameObject() {}
 
-	void setTag(sf::String t_tag) { m_tag = t_tag; }
-	sf::String getTag() { return m_tag; }
+	/*void setTeamTag(sf::String t_tag) { m_tag = t_tag; }
+	sf::String getTeamTag() { return m_tag; }
+	
+	void setPegOccupied(bool t_pegOccupied) { m_pegOccupied = t_pegOccupied; }
+	bool getPegOccupied() { return m_pegOccupied; }*/
 
 	sf::Vector2f position;
 	float size;
@@ -21,5 +24,6 @@ public:
 
 
 private:
-	sf::String m_tag;
+	/*sf::String m_tag;
+	bool m_pegOccupied = false;*/
 };

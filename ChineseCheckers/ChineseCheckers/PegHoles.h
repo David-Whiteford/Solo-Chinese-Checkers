@@ -33,6 +33,12 @@ public:
 	{
 		m_empty = t_empty;
 	}
+
+	void setTeamTag(sf::String t_tag) { m_tag = t_tag; }
+	sf::String getTeamTag() { return m_tag; }
+
+	void setPegOccupied(bool t_pegOccupied) { m_pegOccupied = t_pegOccupied; }
+	bool getPegOccupied() { return m_pegOccupied; }
 	GameObject* myGameObject;
 
 private:
@@ -41,5 +47,7 @@ private:
 	sf::Sprite m_sprites;
 	bool m_empty = true;
 	int m_radius = 10;
+	sf::String m_tag;
+	bool m_pegOccupied = false;
 
 };

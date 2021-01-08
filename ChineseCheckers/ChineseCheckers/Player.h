@@ -22,6 +22,7 @@ private:
 	std::vector<PegHoles*> m_pegHolesVec;
 	int m_pegRadius = 10;
 	int m_pieceIndex = 11;
+	int m_pegIndex = 0;
 	bool m_pieceHeld = false;
 	bool m_moseButtonReleased = false;
 	int m_currentPress = 0;

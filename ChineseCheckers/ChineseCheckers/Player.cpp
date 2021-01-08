@@ -16,7 +16,7 @@ void Player::movePiece(int t_newX, int t_newY, sf::RenderWindow& t_window)
 	newMousePos.x = x;
 	newMousePos.y = y;
 	
-	//std::cout << "MosueX:" << newMousePos.x << "MosueY:" << newMousePos.y << std::endl;
+	std::cout << "MosueX:" << newMousePos.x << "MosueY:" << newMousePos.y << std::endl;
 
 	for (int i = 0; i < m_playerPieces.size(); i++)
 	{
@@ -49,18 +49,24 @@ void Player::movePiece(int t_newX, int t_newY, sf::RenderWindow& t_window)
 			if (newMousePos.x < m_pegHolesVec[i]->getPosition().x + m_pegRadius * 2
 				&& newMousePos.x  > m_pegHolesVec[i]->getPosition().x 
 				&& newMousePos.y < m_pegHolesVec[i]->getPosition().y + m_pegRadius * 2
-				&& newMousePos.y > m_pegHolesVec[i]->getPosition().y )
-				
+				&& newMousePos.y > m_pegHolesVec[i]->getPosition().y)
 			{
 				m_newPiecePos = m_pegHolesVec[i]->getPosition();
+				m_pegIndex = i;
 			}
 		}
 	}
 	else if(m_moseButtonReleased)
 	{
-		m_playerPieces[m_pieceIndex]->setPosition(m_newPiecePos);
+		
+		if (m_pegHolesVec[m_pegIndex]->getPegOccupied() == false)
+		{	
+			m_playerPieces[m_pieceIndex]->setPosition(m_newPiecePos);
+			m_pegHolesVec[m_pegIndex]->setTeamTag("Blue");
+			m_pegHolesVec[m_pegIndex]->setPegOccupied(true); 
+		}
 	}
-	//std::cout << "m_pieceHeld: " << m_pieceHeld << std::endl;
+
 }
 
 void Player::setUpPieces(sf::RenderWindow& t_window,Board *t_board)

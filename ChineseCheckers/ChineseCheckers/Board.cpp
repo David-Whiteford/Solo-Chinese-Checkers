@@ -49,7 +49,7 @@ void Board::setMap(sf::RenderWindow& t_window)
 	{
 		for (int col = 0; col < m_boardHeigth; col++)
 		{
-			std::cout << "2D Array Vals: " << m_gameBoard[row][col] << std::endl;
+			//std::cout << "2D Array Vals: " << m_gameBoard[row][col] << std::endl;
 			type = m_gameBoard[row][col];
 			switch (type)
 			{
