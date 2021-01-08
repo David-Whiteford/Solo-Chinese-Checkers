@@ -63,10 +63,8 @@ void Board::setMap(sf::RenderWindow& t_window)
 				m_pegHolesVec.push_back(new PegHoles(t_window, m_tileSize,
 					sf::Vector2f(x * m_tileSize, y * m_tileSize), m_pegSprite, sf::Color::White));
 				m_raysVec.push_back(new Raycast());
-				for (int i = 0; i < m_raysVec.size(); i++)
-				{
-					m_raysVec[i]->setRayValues(sf::Vector2f(x * m_tileSize, y * m_tileSize), sf::Vector2f(100, 100),100);
-				}
+				m_raysVec.back()->setRayValues(sf::Vector2f(x * m_tileSize + 10, y * m_tileSize + 10), sf::Vector2f(10, 10),3);
+				
 			
 				break;
 			default:
