@@ -22,11 +22,15 @@ void Board::LoadBoard(int arr[21][20])
 }
 
 
-void Board::Draw()
+void Board::Draw(sf::RenderWindow& t_window)
 {
 	for (int i = 0; i < m_pegHolesVec.size(); ++i)
 	{
 		m_pegHolesVec[i]->draw();
+	}
+	for (int i = 0; i < m_raysVec.size(); ++i)
+	{
+		t_window.draw(m_raysVec[i]->drawRay());
 	}
 }
 
@@ -49,7 +53,7 @@ void Board::setMap(sf::RenderWindow& t_window)
 	{
 		for (int col = 0; col < m_boardHeigth; col++)
 		{
-			std::cout << "2D Array Vals: " << m_gameBoard[row][col] << std::endl;
+			//std::cout << "2D Array Vals: " << m_gameBoard[row][col] << std::endl;
 			type = m_gameBoard[row][col];
 			switch (type)
 			{
@@ -57,7 +61,13 @@ void Board::setMap(sf::RenderWindow& t_window)
 				break;
 			case 1:
 				m_pegHolesVec.push_back(new PegHoles(t_window, m_tileSize,
-					sf::Vector2f(x * m_tileSize, y * m_tileSize), m_pegSprite));
+					sf::Vector2f(x * m_tileSize, y * m_tileSize), m_pegSprite, sf::Color::White));
+				m_raysVec.push_back(new Raycast());
+				for (int i = 0; i < m_raysVec.size(); i++)
+				{
+					m_raysVec[i]->setRayValues(sf::Vector2f(x * m_tileSize, y * m_tileSize), sf::Vector2f(100, 100),100);
+				}
+			
 				break;
 			default:
 				break;
@@ -76,3 +86,9 @@ std::vector<PegHoles*> Board::getBoardHoles()
 {
 	return m_pegHolesVec;
 }
+
+void Board::setUpRays()
+{
+	
+}
+

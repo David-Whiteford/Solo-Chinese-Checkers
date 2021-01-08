@@ -80,7 +80,7 @@ void Game::render()
 	switch (m_currentMode)
 	{
 	case GameMode::Gameplay:
-		m_board->Draw();
+		m_board->Draw(m_window);
 		m_gameplayScreen.render(m_window);
 		
 		break;
