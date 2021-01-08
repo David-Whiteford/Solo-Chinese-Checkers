@@ -16,19 +16,18 @@ void Player::movePiece(int t_newX, int t_newY, sf::RenderWindow& t_window)
 	newMousePos.x = x;
 	newMousePos.y = y;
 	
-	std::cout << "MosueX:" << newMousePos.x << "MosueY:" << newMousePos.y << std::endl;
+	//std::cout << "MosueX:" << newMousePos.x << "MosueY:" << newMousePos.y << std::endl;
 
 	for (int i = 0; i < m_playerPieces.size(); i++)
 	{
-		if (newMousePos.x > m_playerPieces[i]->getPosition().x - m_pegRadius 
-			&& newMousePos.x < m_playerPieces[i]->getPosition().x + m_pegRadius
-			&& newMousePos.y > m_playerPieces[i]->getPosition().y - m_pegRadius 
-			&& newMousePos.y < m_playerPieces[i]->getPosition().y + m_pegRadius
+		if (newMousePos.x < m_playerPieces[i]->getPosition().x + m_pegRadius *2
+			&& newMousePos.x  > m_playerPieces[i]->getPosition().x 
+			&& newMousePos.y < m_playerPieces[i]->getPosition().y + m_pegRadius*2
+			&& newMousePos.y > m_playerPieces[i]->getPosition().y 
 			&& sf::Mouse::isButtonPressed(sf::Mouse::Left) && m_pieceHeld == false)
 		{
 			m_pieceIndex = i;
 			m_pieceHeld = true;	
-			std::cout << "Piece Held:" << m_pieceHeld << std::endl;
 			m_moseButtonReleased = false;
 			m_currentPress++;
 		}
@@ -47,10 +46,11 @@ void Player::movePiece(int t_newX, int t_newY, sf::RenderWindow& t_window)
 		m_playerPieces[m_pieceIndex]->setPosition(newMousePos);
 		for (int i = 0; i < m_pegHolesVec.size(); i++)
 		{
-			if (newMousePos.x + m_pegRadius > m_pegHolesVec[i]->getPosition().x - m_pegRadius
-				&& newMousePos.x - m_pegRadius < m_pegHolesVec[i]->getPosition().x + m_pegRadius
-				&& newMousePos.y + m_pegRadius > m_pegHolesVec[i]->getPosition().y - m_pegRadius
-				&& newMousePos.y - m_pegRadius < m_pegHolesVec[i]->getPosition().y + m_pegRadius)
+			if (newMousePos.x < m_pegHolesVec[i]->getPosition().x + m_pegRadius * 2
+				&& newMousePos.x  > m_pegHolesVec[i]->getPosition().x 
+				&& newMousePos.y < m_pegHolesVec[i]->getPosition().y + m_pegRadius * 2
+				&& newMousePos.y > m_pegHolesVec[i]->getPosition().y )
+				
 			{
 				m_newPiecePos = m_pegHolesVec[i]->getPosition();
 			}
@@ -60,30 +60,7 @@ void Player::movePiece(int t_newX, int t_newY, sf::RenderWindow& t_window)
 	{
 		m_playerPieces[m_pieceIndex]->setPosition(m_newPiecePos);
 	}
-	/*if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
-	{
-		m_playerPieces[m_pieceIndex]->setPosition(newMousePos);
-		for (int i = 0; i < m_pegHolesVec.size(); i++)
-		{
-			if (newMousePos.x + m_pegRadius > m_pegHolesVec[i]->getPosition().x - m_pegRadius
-				&& newMousePos.x - m_pegRadius < m_pegHolesVec[i]->getPosition().x + m_pegRadius
-				&& newMousePos.y + m_pegRadius > m_pegHolesVec[i]->getPosition().y - m_pegRadius
-				&& newMousePos.y - m_pegRadius < m_pegHolesVec[i]->getPosition().y + m_pegRadius)
-			{
-				m_newPiecePos = m_pegHolesVec[i]->getPosition();
-				
-
-			}
-		}
-		m_pieceHeld = true;
-	}
-	else
-	{
-		m_playerPieces[m_pieceIndex]->setPosition(newMousePos);
-		m_pieceHeld = false;
-	}*/
-
-	std::cout << "m_pieceHeld: " << m_pieceHeld << std::endl;
+	//std::cout << "m_pieceHeld: " << m_pieceHeld << std::endl;
 }
 
 void Player::setUpPieces(sf::RenderWindow& t_window,Board *t_board)

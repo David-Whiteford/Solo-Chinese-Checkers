@@ -10,8 +10,7 @@ public:
 	{
 		m_piece.setPosition(pos);
 		m_piece.setFillColor(t_pieceColor);
-		m_piece.setRadius(10);
-		
+		m_piece.setRadius(m_radius);
 	}
 	~Pieces() {}
 	sf::Sprite getSprite() { 
@@ -32,5 +31,6 @@ private:
 	sf::CircleShape m_piece;
 	sf::RenderWindow& m_window;
 	sf::Sprite m_sprites;
+	int m_radius = 10;
 
 };

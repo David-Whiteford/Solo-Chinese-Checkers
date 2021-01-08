@@ -13,7 +13,9 @@ public:
 		//m_sprites.setOrigin(sf::Vector2f(size / 2, size / 2));
 		m_pegHoles.setPosition(pos);
 		m_pegHoles.setFillColor(sf::Color::White);
-		m_pegHoles.setRadius(10);
+		m_pegHoles.setRadius(m_radius);
+		
+		
 	}
 	~PegHoles() {}
 	sf::Sprite getSprite() { return m_sprites; }
@@ -38,5 +40,6 @@ private:
 	sf::RenderWindow& m_window;
 	sf::Sprite m_sprites;
 	bool m_empty = true;
+	int m_radius = 10;
 
 };
