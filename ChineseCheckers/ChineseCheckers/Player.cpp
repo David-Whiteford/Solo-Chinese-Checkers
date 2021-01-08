@@ -8,8 +8,9 @@ Player::~Player()
 {
 }
 
-void Player::movePiece(int t_newX, int t_newY, sf::RenderWindow& t_window)
+void Player::movePiece(sf::RenderWindow& t_window)
 {
+	
 	int x = sf::Mouse::getPosition(t_window).x;
 	int y = sf::Mouse::getPosition(t_window).y;
 	sf::Vector2f newMousePos;
@@ -43,6 +44,7 @@ void Player::movePiece(int t_newX, int t_newY, sf::RenderWindow& t_window)
 	}
 	if (m_pieceHeld)
 	{
+		
 		m_playerPieces[m_pieceIndex]->setPosition(newMousePos);
 		for (int i = 0; i < m_pegHolesVec.size(); i++)
 		{
@@ -53,19 +55,33 @@ void Player::movePiece(int t_newX, int t_newY, sf::RenderWindow& t_window)
 			{
 				m_newPiecePos = m_pegHolesVec[i]->getPosition();
 				m_pegIndex = i;
+				m_placePiece = true;
 			}
 		}
 	}
+	
 	else if(m_moseButtonReleased)
 	{
-		
-		if (m_pegHolesVec[m_pegIndex]->getPegOccupied() == false)
+		if (m_pegHolesVec[m_pegIndex]->getPegOccupied() == false )
 		{	
-			m_playerPieces[m_pieceIndex]->setPosition(m_newPiecePos);
-			m_pegHolesVec[m_pegIndex]->setTeamTag("Blue");
-			m_pegHolesVec[m_pegIndex]->setPegOccupied(true); 
+			
+				m_playerPieces[m_pieceIndex]->setPosition(m_newPiecePos);
+				m_pegHolesVec[m_pegIndex]->setTeamTag("Blue");
+				m_pegHolesVec[m_pegIndex]->setPegOccupied(true);
+			
+		}
+		for (int i = 0; i < m_playerPieces.size(); i++)
+		{
+			if (m_playerPieces[m_pieceIndex]->getPosition().x < m_playerPieces[i]->getPosition().x + m_pegRadius * 2
+				&& m_playerPieces[m_pieceIndex]->getPosition().x  > m_playerPieces[i]->getPosition().x
+				&& m_playerPieces[m_pieceIndex]->getPosition().y < m_playerPieces[i]->getPosition().y + m_pegRadius * 2
+				&& m_playerPieces[m_pieceIndex]->getPosition().y > m_playerPieces[i]->getPosition().y)
+			{
+				m_playerPieces[m_pieceIndex]->setPosition(m_initialPos[m_pieceIndex]);
+			}
 		}
 	}
+
 
 }
 
