@@ -25,7 +25,7 @@ private:
 	void update(sf::Time t_deltaTime);
 	void render();
 	void setupAssets();
-	//Board* m_board;
+	Board* m_board;
 	//Font
 	sf::Font m_ArialBlackfont;
 
