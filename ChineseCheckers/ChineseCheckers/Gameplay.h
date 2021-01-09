@@ -4,6 +4,16 @@
 #include <array>
 #include "Player.h"
 #include "Board.h"
+#include "Button.h"
+#include <array>
+#include "Globals.h"
+
+enum class Turn
+{
+	Player,
+	AI
+};
+
 class GamePlay
 {
 public:
@@ -17,6 +27,14 @@ private:
 	//Font
 	sf::Font m_font;
 	Player m_player;
+
+	//Turn
+	static Turn m_turn;
+
+	static const int m_amountOfPlayers = 2;
+	std::array<Button, m_amountOfPlayers> m_turnIndicator;
+	void currentTurn();
+	void m_nextPlayersTurn();
 
 
 };
