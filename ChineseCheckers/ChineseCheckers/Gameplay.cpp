@@ -12,14 +12,14 @@ GamePlay::~GamePlay()
 
 void GamePlay::update(sf::Time t_deltaTime, sf::RenderWindow& t_window)
 {
-	m_player.movePiece(0,0, t_window);
-
-
 	for (Button indicatorButton : m_turnIndicator)
 	{
 		indicatorButton.update(t_deltaTime);
 	}
 	currentTurn();
+
+	m_player.movePiece(t_window);
+
 }
 
 void GamePlay::render(sf::RenderWindow& t_window)

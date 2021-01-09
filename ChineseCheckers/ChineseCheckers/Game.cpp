@@ -95,7 +95,7 @@ void Game::render()
 		m_menu.render(m_window);
 		break;
 	case GameMode::Gameplay:
-		m_board->Draw();
+		m_board->Draw(m_window);
 		m_gameplayScreen.render(m_window);
 		break;
 	case GameMode::Win:

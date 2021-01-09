@@ -1,11 +1,10 @@
 #ifndef BOARD_H
 #define BOARD_H
-
-
 #include <string>
 #include <iostream>
 #include <SFML/Graphics.hpp>
 #include "PegHoles.h"
+#include "Raycast.h"
 
 class Board
 {
@@ -13,10 +12,11 @@ public:
 	Board();
 	~Board();
 	void LoadBoard(int arr[21][20]);
-	void Draw();
+	void Draw(sf::RenderWindow& t_window);
 	void init();
 	void setMap(sf::RenderWindow& t_window);
 	std::vector<PegHoles*> getBoardHoles();
+	void setUpRays();
 private:
 	sf::Texture m_texture;
 	int m_gameBoard[21][20];
@@ -26,6 +26,7 @@ private:
 	static const int m_mapWidth = 21;
 	static const int m_mapHeigth = 20;
 	std::vector<PegHoles*> m_pegHolesVec;
+	std::vector<Raycast*> m_raysVec;
 	int m_tileSize = 20;
 	int lvl1[m_mapWidth][m_mapHeigth] = {
 0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,
