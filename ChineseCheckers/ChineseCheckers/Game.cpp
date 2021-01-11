@@ -95,8 +95,9 @@ void Game::render()
 		m_menu.render(m_window);
 		break;
 	case GameMode::Gameplay:
-		m_board->Draw(m_window);
+		
 		m_gameplayScreen.render(m_window);
+		m_board->Draw(m_window);
 		break;
 	case GameMode::Win:
 		m_winScreen.render(m_window);
@@ -119,6 +120,7 @@ void Game::setupAssets()
 		//std::cout << "problem loading arial Stardust Font" << std::endl;
 	}
 	m_board->setMap(m_window);
+	m_board->setUpRays();
 	m_gameplayScreen.setup(m_ArialBlackfont,m_window,m_board);
 	m_splashScreen.setup(m_ArialBlackfont);
 	m_menu.setup(m_ArialBlackfont);

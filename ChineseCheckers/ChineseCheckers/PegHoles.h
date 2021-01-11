@@ -6,7 +6,7 @@
 class PegHoles : public GameObject
 {
 public:
-	PegHoles(sf::RenderWindow& t_window, float size, sf::Vector2f pos, sf::Sprite t_sprite,sf::Color t_color) :
+	PegHoles(sf::RenderWindow& t_window, float size, sf::Vector2f pos, sf::Sprite t_sprite,sf::Color t_color,int t_row,int t_col) :
 		m_window(t_window)
 	{
 		m_sprites = t_sprite;
@@ -15,6 +15,8 @@ public:
 		m_pegHoles.setPosition(pos);
 		m_pegHoles.setFillColor(t_color);
 		m_pegHoles.setRadius(m_radius);
+		m_row = t_row;
+		m_col = t_col;
 		
 		
 	}
@@ -24,6 +26,14 @@ public:
 	sf::Vector2f getPosition()
 	{
 		return m_pegHoles.getPosition();
+	}
+	int getRow()
+	{
+		return m_row;
+	}
+	int getCol()
+	{
+		return m_col;
 	}
 	void draw() 
 	{ 
@@ -50,6 +60,8 @@ private:
 	int m_radius = 10;
 	sf::String m_tag;
 	bool m_pegOccupied = false;
+	int m_row = 0;
+	int m_col = 0;
 	
 
 };

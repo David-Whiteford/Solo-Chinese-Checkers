@@ -149,12 +149,10 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MenuScreen.cpp" />
     <ClCompile Include="Player.cpp" />
-
     <ClCompile Include="SplashScreen.cpp" />
+    <ClCompile Include="Vector.cpp" />
     <ClCompile Include="WinScreen.cpp" />
-
     <ClCompile Include="Raycast.cpp" />
-
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Board.h" />
@@ -168,10 +166,9 @@
     <ClInclude Include="PegHoles.h" />
     <ClInclude Include="Pieces.h" />
     <ClInclude Include="Player.h" />
-
     <ClInclude Include="SplashScreen.h" />
+    <ClInclude Include="Vector.h" />
     <ClInclude Include="WinScreen.h" />
-
     <ClInclude Include="Raycast.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

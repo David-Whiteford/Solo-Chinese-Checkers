@@ -7,7 +7,7 @@ class Raycast
 {
 
 public:
-	Raycast();
+	Raycast(sf::Vector2f t_startPosition, sf::Vector2f t_direction, float t_length);
 	~Raycast();
 	void setRayValues(sf::Vector2f t_startPosition, sf::Vector2f t_direction, float t_length);
 	bool hit(sf::Vector2f t_targetPosition, float t_targetRadius);

@@ -61,17 +61,17 @@ void Board::setMap(sf::RenderWindow& t_window)
 				break;
 			case 1:
 				m_pegHolesVec.push_back(new PegHoles(t_window, m_tileSize,
-					sf::Vector2f(x * m_tileSize, y * m_tileSize), m_pegSprite, sf::Color::White));
-				m_raysVec.push_back(new Raycast());
-				m_raysVec.back()->setRayValues(sf::Vector2f(x * m_tileSize + 10, y * m_tileSize + 10), sf::Vector2f(10, 10),3);
-				
-			
+					sf::Vector2f(x * m_tileSize, y * m_tileSize), m_pegSprite, sf::Color::White , y , x));	
+				break;
+			case 2:
+				m_pegHolesVec.push_back(new PegHoles(t_window, m_tileSize,
+					sf::Vector2f(x * m_tileSize, y * m_tileSize), m_pegSprite, sf::Color::Green, y, x));
 				break;
 			default:
 				break;
 			}
 			x++;
-			if (x == m_mapWidth)
+			if (x == ROWS)
 			{
 				x = 0;
 				y++;
@@ -84,9 +84,40 @@ std::vector<PegHoles*> Board::getBoardHoles()
 {
 	return m_pegHolesVec;
 }
+std::vector<Raycast*> Board::getRays()
+{
+	return m_raysVec;
+}
 
 void Board::setUpRays()
 {
-	
+	for (int i = 0; i < m_pegHolesVec.size();i++)
+	{
+		for (int direction = 0; direction < 9; direction++)
+		{
+			
+			if (direction == 4) continue; // Skip 4, this is ourself.
+			
+			int n_row = m_pegHolesVec[i]->getRow() + ((direction % 3) - 1); // Neighbor row
+			int n_col = m_pegHolesVec[i]->getCol() + ((direction / 3) - 1); // Neighbor column
+			//std::cout << "n_row" << n_row << "n_col" << n_col << std::endl;
+			if (n_row >= 0 && n_row < ROWS && n_col >= 0 && n_col < COLS)
+			{
+				for (int j = 0; j < m_pegHolesVec.size(); j++)
+				{
+					if (m_pegHolesVec[j]->getRow() == n_row && m_pegHolesVec[j]->getCol() == n_col)
+					{
+						sf::Vector2f startPos = sf::Vector2f(m_pegHolesVec[i]->getPosition().x + 10, m_pegHolesVec[i]->getPosition().y + 10);
+						sf::Vector2f endPos = sf::Vector2f(m_pegHolesVec[j]->getPosition().x + 10, m_pegHolesVec[j]->getPosition().y + 10);
+						sf::Vector2f direction = startPos - endPos;
+						sf::Vector2f newDir = m_vector2.normalise(direction);
+						m_raysVec.push_back(new Raycast(startPos, newDir, 16));
+						std::cout << "m_raysVecSIZE" << m_raysVec.size();
+					}
+				}
+			}
+		}
+	}
+
 }
 
