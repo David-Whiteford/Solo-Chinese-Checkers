@@ -87,14 +87,16 @@ void Player::movePiece(sf::RenderWindow& t_window)
 
 void Player::setUpPieces(sf::RenderWindow& t_window,Board *t_board)
 {
-	m_pegHolesVec = t_board->getBoardHoles();
 	if (m_sideTop == true)
 	{
-		for (int i = 0; i < m_maxPlayerPieces;)
+		for (int i = 0; i < m_maxPlaces;i++)
 		{
-			m_playerPieces.push_back(new Pieces(t_window, t_board->getBoardHoles()[i]->getPosition(), sf::Color::Blue));
-			m_initialPos.push_back(t_board->getBoardHoles()[i]->getPosition());
-			i++;
+			if (t_board->getBoardHoles()[i]->getColor() == sf::Color::Green) {}
+			else
+			{
+				m_playerPieces.push_back(new Pieces(t_window, t_board->getBoardHoles()[i]->getPosition(), sf::Color::Blue));
+				m_initialPos.push_back(t_board->getBoardHoles()[i]->getPosition());
+			}
 		}
 	}
 }

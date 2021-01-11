@@ -31,6 +31,10 @@ public:
 	{
 		return m_row;
 	}
+	sf::Color getColor()
+	{
+		return m_pegHoles.getFillColor();
+	}
 	int getCol()
 	{
 		return m_col;

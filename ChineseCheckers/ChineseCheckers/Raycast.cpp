@@ -22,9 +22,9 @@ sf::VertexArray Raycast::drawRay()
 {
 	sf::VertexArray ray(sf::LinesStrip, 2);
 	ray[0].position = m_positon;
-	ray[0].color = sf::Color::Blue;
+	ray[0].color = sf::Color::Red;
 	ray[1].position = m_positon + (m_direction * (m_rayLength));
-	ray[1].color = sf::Color::Blue;
+	ray[1].color = sf::Color::Red;
 	return ray;
 }
 bool Raycast::isInterpolating()

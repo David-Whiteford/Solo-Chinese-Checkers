@@ -26,12 +26,16 @@ void Board::Draw(sf::RenderWindow& t_window)
 {
 	for (int i = 0; i < m_pegHolesVec.size(); ++i)
 	{
-		m_pegHolesVec[i]->draw();
+		if (m_pegHolesVec[i]->getColor() == sf::Color::Green){}
+		else
+		{
+			m_pegHolesVec[i]->draw();
+		}
 	}
-	for (int i = 0; i < m_raysVec.size(); ++i)
-	{
-		t_window.draw(m_raysVec[i]->drawRay());
-	}
+	//for (int i = 0; i < m_raysVec.size(); ++i)
+	//{
+	//	t_window.draw(m_raysVec[i]->drawRay());
+	//}
 }
 
 void Board::init()
@@ -53,7 +57,7 @@ void Board::setMap(sf::RenderWindow& t_window)
 	{
 		for (int col = 0; col < m_boardHeigth; col++)
 		{
-			//std::cout << "2D Array Vals: " << m_gameBoard[row][col] << std::endl;
+			
 			type = m_gameBoard[row][col];
 			switch (type)
 			{
@@ -91,16 +95,16 @@ std::vector<Raycast*> Board::getRays()
 
 void Board::setUpRays()
 {
+	int rayLength = 38;
 	for (int i = 0; i < m_pegHolesVec.size();i++)
 	{
 		for (int direction = 0; direction < 9; direction++)
 		{
-			
 			if (direction == 4) continue; // Skip 4, this is ourself.
 			
 			int n_row = m_pegHolesVec[i]->getRow() + ((direction % 3) - 1); // Neighbor row
 			int n_col = m_pegHolesVec[i]->getCol() + ((direction / 3) - 1); // Neighbor column
-			//std::cout << "n_row" << n_row << "n_col" << n_col << std::endl;
+			
 			if (n_row >= 0 && n_row < ROWS && n_col >= 0 && n_col < COLS)
 			{
 				for (int j = 0; j < m_pegHolesVec.size(); j++)
@@ -111,8 +115,8 @@ void Board::setUpRays()
 						sf::Vector2f endPos = sf::Vector2f(m_pegHolesVec[j]->getPosition().x + 10, m_pegHolesVec[j]->getPosition().y + 10);
 						sf::Vector2f direction = startPos - endPos;
 						sf::Vector2f newDir = m_vector2.normalise(direction);
-						m_raysVec.push_back(new Raycast(startPos, newDir, 16));
-						std::cout << "m_raysVecSIZE" << m_raysVec.size();
+						m_raysVec.push_back(new Raycast(startPos, newDir, rayLength));
+					
 					}
 				}
 			}

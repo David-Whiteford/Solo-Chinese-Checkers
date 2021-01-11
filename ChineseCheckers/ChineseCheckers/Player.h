@@ -18,7 +18,7 @@ private:
 	int m_index = 0;
 	bool m_sideTop = true;
 	Board m_board;
-	int m_maxPlayerPieces = 10;
+	int m_maxPlaces = 16;
 	std::vector<PegHoles*> m_pegHolesVec;
 	int m_pegRadius = 10;
 	int m_pieceIndex = 11;
