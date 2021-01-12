@@ -119,6 +119,7 @@ void Game::setupAssets()
 		//std::cout << "problem loading arial Stardust Font" << std::endl;
 	}
 	m_board->setMap(m_window);
+	m_board->setUpRays();
 	m_gameplayScreen.setup(m_ArialBlackfont,m_window,m_board);
 	m_splashScreen.setup(m_ArialBlackfont);
 	m_menu.setup(m_ArialBlackfont);
