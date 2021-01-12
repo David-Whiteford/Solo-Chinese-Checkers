@@ -10,7 +10,7 @@ Player::~Player()
 
 void Player::movePiece(sf::RenderWindow& t_window)
 {
-	
+	sf::Vector2f offset = sf::Vector2f(10, 10);
 	int x = sf::Mouse::getPosition(t_window).x;
 	int y = sf::Mouse::getPosition(t_window).y;
 	sf::Vector2f newMousePos;
@@ -56,7 +56,8 @@ void Player::movePiece(sf::RenderWindow& t_window)
 	}
 	if (m_pieceHeld)
 	{
-		m_playerPieces[m_pieceIndex]->setPosition(newMousePos);
+		
+		m_playerPieces[m_pieceIndex]->setPosition(newMousePos- offset);
 	}
 	if(m_moseButtonReleased)
 	{
@@ -64,23 +65,20 @@ void Player::movePiece(sf::RenderWindow& t_window)
 		{
 			sf::Vector2f point = m_endRaysVec[i]->getEndPoint();
 			sf::Vector2f circlePos = m_playerPieces[m_pieceIndex]->getPosition();
-			if(m_colisions.pointCircleCol(point, circlePos,m_pegRadius))
+			if(m_colisions.pointCircleCol(point, circlePos,m_pegRadius) == true)
 			{
-				sf::Vector2f offset = sf::Vector2f(10, 10);
 				m_playerPieces[m_pieceIndex]->setPosition(m_endRaysVec[i]->getEndPoint() - offset);
-				
 			}
-		/*	if (m_colisions.pointCircleCol(point, circlePos, m_pegRadius) == false)
-			{
+			else {
 				m_playerPieces[m_pieceIndex]->setPosition(m_initialPos[m_pieceIndex]);
-			}*/
+			}
 		
 		}
 		m_endRaysVec.clear();
 		m_doOnce = 0;
 	}
-
-
+	PegHoles* peg = m_board->getPegHole(m_raysVec[6]);
+	std::cout << "PEg PosX: " << peg->getPosition().x << "PEg PosY: " << peg->getPosition().y << std::endl;
 }
 
 void Player::setUpPieces(sf::RenderWindow& t_window,Board *t_board)

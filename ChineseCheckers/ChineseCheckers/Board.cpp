@@ -118,6 +118,8 @@ void Board::setUpRays()
 							,m_pegHolesVec[i]->getPosition().y + 10);
 						sf::Vector2f endPos = sf::Vector2f(m_pegHolesVec[j]->getPosition().x + 10
 							, m_pegHolesVec[j]->getPosition().y + 10);
+						m_pegHolesVec[i]->setNeighbours(m_pegHolesVec[j]);
+						//std::cout << "Neighbours: " << m_pegHolesVec[i]->getNeighbours().size() << std::endl;
 						//get the direction of the ray and normalise it
 						sf::Vector2f directionVec = startPos - endPos;
 						sf::Vector2f newDir = m_vector2.normalise(directionVec);
@@ -140,6 +142,26 @@ void Board::setUpRays()
 			}
 		}
 	}
-
 }
+PegHoles* Board::getPegHole(Raycast* t_ray)
+{
+	for (int i = 0; i < m_pegHolesVec.size(); ++i)
+	{
+		if (m_colisions.pointCircleCol(t_ray->getEndPoint(), m_pegHolesVec[i]->getPosition(), m_radius))
+		{
+			return m_pegHolesVec[i];
+		}
+	}
+}
+std::vector<PegHoles*> Board::getPieceNeigthbours(Pieces* t_piece)
+{
+	for (int i = 0; i < m_pegHolesVec.size(); ++i)
+	{
+		if (m_colisions.pointCircleCol(t_piece->getPosition(), m_pegHolesVec[i]->getPosition(), m_radius))
+		{
+			return m_pieceNeighbours = m_pegHolesVec[i]->getNeighbours();
+		}
+	}
+}
+
 

@@ -48,7 +48,14 @@ public:
 	{
 		m_empty = t_empty;
 	}
-
+	void setNeighbours(PegHoles* t_neighbourPegs)
+	{
+		m_neighboursPegs.push_back(t_neighbourPegs);
+	}
+	std::vector<PegHoles*> getNeighbours()
+	{
+		return m_neighboursPegs;
+	}
 	void setTeamTag(sf::String t_tag) { m_tag = t_tag; }
 	sf::String getTeamTag() { return m_tag; }
 
@@ -66,6 +73,6 @@ private:
 	bool m_pegOccupied = false;
 	int m_row = 0;
 	int m_col = 0;
-	
+	std::vector<PegHoles*> m_neighboursPegs;
 
 };

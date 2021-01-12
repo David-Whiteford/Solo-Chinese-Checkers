@@ -17,7 +17,11 @@ bool Collisions::pointCircleCol(sf::Vector2f t_point, sf::Vector2f t_circle,  in
 	{
 		return true;
 	}
-	return false;
+	else
+	{
+		return false; 
+	}
+	
 }
 
 bool Collisions::circleToCircleCol(sf::Vector2f t_circle1, sf::Vector2f t_circle2, int t_circleOneRadius, int t_circleTwoRadius)

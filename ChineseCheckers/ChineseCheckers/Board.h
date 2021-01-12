@@ -7,6 +7,8 @@
 #include "PegHoles.h"
 #include "Raycast.h"
 #include "Vector.h"
+#include "Collisions.h"
+#include "Pieces.h"
 int const ROWS = 21;
 int const COLS = 20;
 class Board
@@ -21,7 +23,10 @@ public:
 	std::vector<PegHoles*> getBoardHoles();
 	std::vector<Raycast*> getRays();
 	void setUpRays();
+	PegHoles* getPegHole(Raycast* t_ray);
+	std::vector<PegHoles*> getPieceNeigthbours(Pieces* t_piece);
 private:
+	Collisions m_colisions;
 	float m_maxDist = 40.0f;
 	MyVector2 m_vector2;
 	sf::Texture m_texture;
@@ -31,6 +36,8 @@ private:
 	sf::Sprite m_pegSprite;
 	std::vector<PegHoles*> m_pegHolesVec;
 	std::vector<Raycast*> m_raysVec;
+	std::vector<PegHoles*> m_pieceNeighbours;
+	int m_radius = 10;
 	int m_tileSize = 20;
 	int lvl1[ROWS][COLS] = {
 0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,
