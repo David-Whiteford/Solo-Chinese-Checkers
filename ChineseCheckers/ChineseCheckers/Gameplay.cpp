@@ -26,6 +26,8 @@ void GamePlay::render(sf::RenderWindow& t_window)
 {
 	m_player.draw();
 
+	m_AI.draw();
+
 	for (Button indicatorButton : m_turnIndicator)
 	{
 		indicatorButton.render(t_window);
@@ -36,6 +38,7 @@ void GamePlay::render(sf::RenderWindow& t_window)
 void GamePlay::setup(sf::Font& t_font, sf::RenderWindow& t_window, Board* t_board)
 {
 	m_player.setUpPieces(t_window,t_board);
+	m_AI.setUpPieces(t_window, t_board);
 
 	for (Button indicatorButton : m_turnIndicator)
 	{

@@ -1,6 +1,6 @@
 #include "Game.h"
 
-GameMode Game::m_currentMode{ GameMode::Splash };
+GameMode Game::m_currentMode{ GameMode::Gameplay };
 Difficulty Game::m_difficulty{ Difficulty::Easy };
 
 Game::Game() : m_window{ sf::VideoMode{ SCREEN_WIDTH, SCREEN_HEIGHT, 32 }, "Chinese Checkers by Tom Lloyd and David Whiteford" }, m_exitGame{ false }
