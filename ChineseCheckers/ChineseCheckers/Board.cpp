@@ -32,10 +32,10 @@ void Board::Draw(sf::RenderWindow& t_window)
 			m_pegHolesVec[i]->draw();
 		}
 	}
-	//for (int i = 0; i < m_raysVec.size(); ++i)
-	//{
-	//	t_window.draw(m_raysVec[i]->drawRay());
-	//}
+	/*for (int i = 0; i < m_raysVec.size(); ++i)
+	{
+		t_window.draw(m_raysVec[i]->drawRay());
+	}*/
 }
 
 void Board::init()
@@ -95,6 +95,7 @@ std::vector<Raycast*> Board::getRays()
 
 void Board::setUpRays()
 {
+	float distance;
 	int rayLength = 28;
 	for (int i = 0; i < m_pegHolesVec.size();i++)
 	{
@@ -117,17 +118,21 @@ void Board::setUpRays()
 							,m_pegHolesVec[i]->getPosition().y + 10);
 						sf::Vector2f endPos = sf::Vector2f(m_pegHolesVec[j]->getPosition().x + 10
 							, m_pegHolesVec[j]->getPosition().y + 10);
-						//get the distance from the start position of the ray to the end position
-						float distance = sqrt(((startPos.x - endPos.x) * (startPos.x - endPos.x)) 
-							+ (startPos.y - endPos.y) * (startPos.y - endPos.y));
-					/*	if (direction == 0 || direction == 1
-							|| direction == 2 || direction == 3)
-						{
-							distance = m_maxDist;
-						}*/
 						//get the direction of the ray and normalise it
 						sf::Vector2f directionVec = startPos - endPos;
 						sf::Vector2f newDir = m_vector2.normalise(directionVec);
+						//get the distance from the start position of the ray to the end position
+						//this is depending on the direction of the ray
+						if (newDir.x == 1 || newDir.x == -1 ||
+							newDir.y == 1 || newDir.y == -1)
+						{
+							distance = m_maxDist;
+						}
+						else
+						{
+							distance = sqrt(((startPos.x - endPos.x) * (startPos.x - endPos.x))
+								+ (startPos.y - endPos.y) * (startPos.y - endPos.y));
+						}
 						//creates a new ray and pushs it to a vector to be stored
 						m_raysVec.push_back(new Raycast(startPos, newDir, distance));
 					}

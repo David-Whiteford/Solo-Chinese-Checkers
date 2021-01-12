@@ -21,10 +21,9 @@ void Player::movePiece(sf::RenderWindow& t_window)
 	
 	for (int i = 0; i < m_playerPieces.size(); i++)
 	{
-		if (newMousePos.x < m_playerPieces[i]->getPosition().x + m_pegRadius *2
-			&& newMousePos.x  > m_playerPieces[i]->getPosition().x 
-			&& newMousePos.y < m_playerPieces[i]->getPosition().y + m_pegRadius*2
-			&& newMousePos.y > m_playerPieces[i]->getPosition().y 
+		sf::Vector2f mousePos = sf::Vector2f(newMousePos.x, newMousePos.y);
+		sf::Vector2f circlePos = m_playerPieces[i]->getPosition();
+		if(m_colisions.pointCircleCol(mousePos, circlePos, m_pegRadius)
 			&& sf::Mouse::isButtonPressed(sf::Mouse::Left) && m_pieceHeld == false)
 		{
 			m_pieceIndex = i;
@@ -51,15 +50,7 @@ void Player::movePiece(sf::RenderWindow& t_window)
 			if (m_colisions.pointCircleCol(point, circlePos,m_pegRadius))
 			{
 				m_endRaysVec.push_back(m_raysVec[j]);
-			}
-		/*	if (m_raysVec[j]->getRayStartPos().x < m_playerPieces[m_pieceIndex]->getPosition().x + m_pegRadius * 2
-				&& m_raysVec[j]->getRayStartPos().x  > m_playerPieces[m_pieceIndex]->getPosition().x
-				&& m_raysVec[j]->getRayStartPos().y < m_playerPieces[m_pieceIndex]->getPosition().y + m_pegRadius * 2
-				&& m_raysVec[j]->getRayStartPos().y > m_playerPieces[m_pieceIndex]->getPosition().y)
-			{
-				m_endRaysVec.push_back(m_raysVec[j]);
-			}*/
-			
+			}		
 		}
 		m_doOnce++;
 	}
@@ -67,7 +58,6 @@ void Player::movePiece(sf::RenderWindow& t_window)
 	{
 		m_playerPieces[m_pieceIndex]->setPosition(newMousePos);
 	}
-	std::cout << "m_endRaysVec: " << m_endRaysVec.size() << std::endl;
 	if(m_moseButtonReleased)
 	{
 		for (int i = 0; i < m_endRaysVec.size(); i++)
