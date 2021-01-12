@@ -7,6 +7,7 @@
 #include "Button.h"
 #include <array>
 #include "Globals.h"
+#include "AI.h"
 
 enum class Turn
 {
@@ -27,6 +28,7 @@ private:
 	//Font
 	sf::Font m_font;
 	Player m_player;
+	AI m_AI;
 
 	//Turn
 	static Turn m_turn;
