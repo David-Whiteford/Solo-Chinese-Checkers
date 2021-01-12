@@ -1,9 +1,10 @@
 #include "Raycast.h"
-Raycast::Raycast()
+Raycast::Raycast(sf::Vector2f t_startPosition, sf::Vector2f t_direction, float t_length)
 {
 	interpolate = true;
-	m_raycastLine[0].color = sf::Color::Red;
-	m_raycastLine[1].color = sf::Color::Blue;
+	m_positon = t_startPosition;
+	m_direction = -t_direction;
+	m_rayLength = t_length;
 }
 
 Raycast::~Raycast()
@@ -13,7 +14,7 @@ Raycast::~Raycast()
 void Raycast::setRayValues(sf::Vector2f t_startPosition, sf::Vector2f t_direction, float t_length)
 {
 	m_positon = t_startPosition;
-	m_direction = t_direction;
+	m_direction = -t_direction;
 	m_rayLength = t_length;
 }
 

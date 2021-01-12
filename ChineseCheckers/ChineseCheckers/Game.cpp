@@ -1,6 +1,6 @@
 #include "Game.h"
 
-GameMode Game::m_currentMode{ GameMode::Splash };
+GameMode Game::m_currentMode{ GameMode::Gameplay };
 Difficulty Game::m_difficulty{ Difficulty::Easy };
 
 Game::Game() : m_window{ sf::VideoMode{ SCREEN_WIDTH, SCREEN_HEIGHT, 32 }, "Chinese Checkers by Tom Lloyd and David Whiteford" }, m_exitGame{ false }
@@ -119,6 +119,7 @@ void Game::setupAssets()
 		//std::cout << "problem loading arial Stardust Font" << std::endl;
 	}
 	m_board->setMap(m_window);
+	m_board->setUpRays();
 	m_gameplayScreen.setup(m_ArialBlackfont,m_window,m_board);
 	m_splashScreen.setup(m_ArialBlackfont);
 	m_menu.setup(m_ArialBlackfont);

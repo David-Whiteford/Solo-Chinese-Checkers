@@ -10,21 +10,20 @@ Player::~Player()
 
 void Player::movePiece(sf::RenderWindow& t_window)
 {
-	
+	sf::Vector2f offset = sf::Vector2f(10, 10);
 	int x = sf::Mouse::getPosition(t_window).x;
 	int y = sf::Mouse::getPosition(t_window).y;
 	sf::Vector2f newMousePos;
 	newMousePos.x = x;
 	newMousePos.y = y;
+	m_pegHolesVec = m_board->getBoardHoles();
+	m_raysVec = m_board->getRays();
 	
-	std::cout << "MosueX:" << newMousePos.x << "MosueY:" << newMousePos.y << std::endl;
-
 	for (int i = 0; i < m_playerPieces.size(); i++)
 	{
-		if (newMousePos.x < m_playerPieces[i]->getPosition().x + m_pegRadius *2
-			&& newMousePos.x  > m_playerPieces[i]->getPosition().x 
-			&& newMousePos.y < m_playerPieces[i]->getPosition().y + m_pegRadius*2
-			&& newMousePos.y > m_playerPieces[i]->getPosition().y 
+		sf::Vector2f mousePos = sf::Vector2f(newMousePos.x, newMousePos.y);
+		sf::Vector2f circlePos = m_playerPieces[i]->getPosition();
+		if(m_colisions.pointCircleCol(mousePos, circlePos, m_pegRadius)
 			&& sf::Mouse::isButtonPressed(sf::Mouse::Left) && m_pieceHeld == false)
 		{
 			m_pieceIndex = i;
@@ -32,69 +31,69 @@ void Player::movePiece(sf::RenderWindow& t_window)
 			m_moseButtonReleased = false;
 			m_currentPress++;
 		}
-		else if (sf::Mouse::isButtonPressed(sf::Mouse::Left) == false)
+	}
+	if (sf::Mouse::isButtonPressed(sf::Mouse::Left) == false)
+	{
+		m_pieceHeld = false;
+		if (m_currentPress == 1)
 		{
-			m_pieceHeld = false;
-			if (m_currentPress == 1)
-			{
-				m_moseButtonReleased = true;
-				m_currentPress = 0;
-			}
+			m_moseButtonReleased = true;
+			m_currentPress = 0;
 		}
+	}
+	if (m_doOnce == 0 && m_pieceHeld)
+	{
+		for (int j = 0; j < m_raysVec.size(); j++)
+		{
+			sf::Vector2f point = m_raysVec[j]->getRayStartPos();
+			sf::Vector2f circlePos = m_playerPieces[m_pieceIndex]->getPosition();
+			if (m_colisions.pointCircleCol(point, circlePos,m_pegRadius))
+			{
+				m_endRaysVec.push_back(m_raysVec[j]);
+			}		
+		}
+		m_doOnce++;
 	}
 	if (m_pieceHeld)
 	{
 		
-		m_playerPieces[m_pieceIndex]->setPosition(newMousePos);
-		for (int i = 0; i < m_pegHolesVec.size(); i++)
-		{
-			if (newMousePos.x < m_pegHolesVec[i]->getPosition().x + m_pegRadius * 2
-				&& newMousePos.x  > m_pegHolesVec[i]->getPosition().x 
-				&& newMousePos.y < m_pegHolesVec[i]->getPosition().y + m_pegRadius * 2
-				&& newMousePos.y > m_pegHolesVec[i]->getPosition().y)
-			{
-				m_newPiecePos = m_pegHolesVec[i]->getPosition();
-				m_pegIndex = i;
-				m_placePiece = true;
-			}
-		}
+		m_playerPieces[m_pieceIndex]->setPosition(newMousePos- offset);
 	}
-	
-	else if(m_moseButtonReleased)
+	if(m_moseButtonReleased)
 	{
-		if (m_pegHolesVec[m_pegIndex]->getPegOccupied() == false )
-		{	
-			
-				m_playerPieces[m_pieceIndex]->setPosition(m_newPiecePos);
-				m_pegHolesVec[m_pegIndex]->setTeamTag("Blue");
-				m_pegHolesVec[m_pegIndex]->setPegOccupied(true);
-			
-		}
-		for (int i = 0; i < m_playerPieces.size(); i++)
+		for (int i = 0; i < m_endRaysVec.size(); i++)
 		{
-			if (m_playerPieces[m_pieceIndex]->getPosition().x < m_playerPieces[i]->getPosition().x + m_pegRadius * 2
-				&& m_playerPieces[m_pieceIndex]->getPosition().x  > m_playerPieces[i]->getPosition().x
-				&& m_playerPieces[m_pieceIndex]->getPosition().y < m_playerPieces[i]->getPosition().y + m_pegRadius * 2
-				&& m_playerPieces[m_pieceIndex]->getPosition().y > m_playerPieces[i]->getPosition().y)
+			sf::Vector2f point = m_endRaysVec[i]->getEndPoint();
+			sf::Vector2f circlePos = m_playerPieces[m_pieceIndex]->getPosition();
+			if(m_colisions.pointCircleCol(point, circlePos,m_pegRadius) == true)
 			{
+				m_playerPieces[m_pieceIndex]->setPosition(m_endRaysVec[i]->getEndPoint() - offset);
+			}
+			else {
 				m_playerPieces[m_pieceIndex]->setPosition(m_initialPos[m_pieceIndex]);
 			}
+		
 		}
+		m_endRaysVec.clear();
+		m_doOnce = 0;
 	}
-
-
+	PegHoles* peg = m_board->getPegHole(m_raysVec[6]);
+	std::cout << "PEg PosX: " << peg->getPosition().x << "PEg PosY: " << peg->getPosition().y << std::endl;
 }
 
 void Player::setUpPieces(sf::RenderWindow& t_window,Board *t_board)
 {
-	m_pegHolesVec = t_board->getBoardHoles();
+	m_board = t_board;
 	if (m_sideTop == true)
 	{
-		for (int i = 0; i < m_maxPlayerPieces;)
+		for (int i = 0; i < m_maxPlaces;i++)
 		{
-			m_playerPieces.push_back(new Pieces(t_window, t_board->getBoardHoles()[i]->getPosition(), sf::Color::Blue));
-			m_initialPos.push_back(t_board->getBoardHoles()[i]->getPosition());
-			i++;
+			if (t_board->getBoardHoles()[i]->getColor() == sf::Color::Green) {}
+			else
+			{
+				m_playerPieces.push_back(new Pieces(t_window, t_board->getBoardHoles()[i]->getPosition(), sf::Color::Blue));
+				m_initialPos.push_back(t_board->getBoardHoles()[i]->getPosition());
+			}
 		}
 	}
 }
