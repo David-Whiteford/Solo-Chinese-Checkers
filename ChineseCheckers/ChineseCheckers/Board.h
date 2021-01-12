@@ -2,6 +2,7 @@
 #define BOARD_H
 #include <string>
 #include <iostream>
+#include <math.h>
 #include <SFML/Graphics.hpp>
 #include "PegHoles.h"
 #include "Raycast.h"
@@ -21,6 +22,7 @@ public:
 	std::vector<Raycast*> getRays();
 	void setUpRays();
 private:
+	float m_maxDist = 40.0f;
 	MyVector2 m_vector2;
 	sf::Texture m_texture;
 	int m_gameBoard[21][20];

@@ -1,7 +1,7 @@
 #pragma once
 #include <iostream>
 #include <SFML/Graphics.hpp>
-
+#include "Collisions.h"
 #include "Pieces.h"
 #include "Board.h"
 class Player
@@ -14,11 +14,15 @@ public:
 	void draw();
 
 private:
+	Collisions m_colisions;
+	Board* m_board;
 	std::vector<Pieces*> m_playerPieces;
 	int m_index = 0;
 	bool m_sideTop = true;
-	Board m_board;
+	int m_doOnce = 0;
 	int m_maxPlaces = 16;
+	std::vector<Raycast*> m_raysVec;
+	std::vector<Raycast*> m_endRaysVec;
 	std::vector<PegHoles*> m_pegHolesVec;
 	int m_pegRadius = 10;
 	int m_pieceIndex = 11;

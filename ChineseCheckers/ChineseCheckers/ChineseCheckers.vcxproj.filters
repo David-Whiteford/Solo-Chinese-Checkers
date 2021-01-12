@@ -13,6 +13,7 @@
     <ClCompile Include="WinScreen.cpp" />
     <ClCompile Include="Raycast.cpp" />
     <ClCompile Include="Vector.cpp" />
+    <ClCompile Include="Collisions.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Board.h" />
@@ -30,5 +31,6 @@
     <ClInclude Include="WinScreen.h" />
     <ClInclude Include="Raycast.h" />
     <ClInclude Include="Vector.h" />
+    <ClInclude Include="Collisions.h" />
   </ItemGroup>
 </Project>

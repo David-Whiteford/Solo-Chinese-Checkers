@@ -95,7 +95,7 @@ std::vector<Raycast*> Board::getRays()
 
 void Board::setUpRays()
 {
-	int rayLength = 38;
+	int rayLength = 28;
 	for (int i = 0; i < m_pegHolesVec.size();i++)
 	{
 		for (int direction = 0; direction < 9; direction++)
@@ -111,12 +111,25 @@ void Board::setUpRays()
 				{
 					if (m_pegHolesVec[j]->getRow() == n_row && m_pegHolesVec[j]->getCol() == n_col)
 					{
-						sf::Vector2f startPos = sf::Vector2f(m_pegHolesVec[i]->getPosition().x + 10, m_pegHolesVec[i]->getPosition().y + 10);
-						sf::Vector2f endPos = sf::Vector2f(m_pegHolesVec[j]->getPosition().x + 10, m_pegHolesVec[j]->getPosition().y + 10);
-						sf::Vector2f direction = startPos - endPos;
-						sf::Vector2f newDir = m_vector2.normalise(direction);
-						m_raysVec.push_back(new Raycast(startPos, newDir, rayLength));
-					
+						//get the startposition and the end position of the ray. These are at a peg in the peg hole
+						//vector and its neighbours.
+						sf::Vector2f startPos = sf::Vector2f(m_pegHolesVec[i]->getPosition().x + 10
+							,m_pegHolesVec[i]->getPosition().y + 10);
+						sf::Vector2f endPos = sf::Vector2f(m_pegHolesVec[j]->getPosition().x + 10
+							, m_pegHolesVec[j]->getPosition().y + 10);
+						//get the distance from the start position of the ray to the end position
+						float distance = sqrt(((startPos.x - endPos.x) * (startPos.x - endPos.x)) 
+							+ (startPos.y - endPos.y) * (startPos.y - endPos.y));
+					/*	if (direction == 0 || direction == 1
+							|| direction == 2 || direction == 3)
+						{
+							distance = m_maxDist;
+						}*/
+						//get the direction of the ray and normalise it
+						sf::Vector2f directionVec = startPos - endPos;
+						sf::Vector2f newDir = m_vector2.normalise(directionVec);
+						//creates a new ray and pushs it to a vector to be stored
+						m_raysVec.push_back(new Raycast(startPos, newDir, distance));
 					}
 				}
 			}
