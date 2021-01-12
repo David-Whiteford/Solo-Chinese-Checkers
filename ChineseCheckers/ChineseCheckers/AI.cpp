@@ -11,12 +11,16 @@ AI::~AI()
 void AI::setUpPieces(sf::RenderWindow& t_window, Board* t_board)
 {
 	m_pegHolesVec = t_board->getBoardHoles();
-	for (int i = 0; i < MAX_PIECES;)
+	for (int i = t_board->getBoardHoles().size() - 1; i > t_board->getBoardHoles().size() - m_places - 1;--i)
 	{
-		//m_AIPieces.push_back(new Pieces(t_window, t_board->getBoardHoles()[t_board->getBoardHoles().size()]->getPosition(), sf::Color::Red));
-		m_AIPieces.push_back(new Pieces(t_window, t_board->getBoardHoles()[102 - i]->getPosition(), sf::Color::Red));
-		//m_initialPos.push_back(t_board->getBoardHoles()[i]->getPosition());
-		i++;
+		if (t_board->getBoardHoles()[i]->getColor() == sf::Color::Green) {}
+		else
+		{
+			//m_AIPieces.push_back(new Pieces(t_window, t_board->getBoardHoles()[t_board->getBoardHoles().size()]->getPosition(), sf::Color::Red));
+			m_AIPieces.push_back(new Pieces(t_window, t_board->getBoardHoles()[i]->getPosition(), sf::Color::Red));
+			//m_initialPos.push_back(t_board->getBoardHoles()[i]->getPosition());
+			
+		}
 	}
 }
 
