@@ -32,10 +32,10 @@ void Board::Draw(sf::RenderWindow& t_window)
 			m_pegHolesVec[i]->draw();
 		}
 	}
-	/*for (int i = 0; i < m_raysVec.size(); ++i)
+	for (int i = 0; i < m_raysVec.size(); ++i)
 	{
 		t_window.draw(m_raysVec[i]->drawRay());
-	}*/
+	}
 }
 
 void Board::init()

@@ -27,11 +27,13 @@ private:
 	int m_pegRadius = 10;
 	int m_pieceIndex = 11;
 	int m_pegIndex = 0;
+	bool piecePlaced = false;
 	bool m_pieceHeld = false;
 	bool m_moseButtonReleased = false;
-	bool m_placePiece = false;
+	bool m_piecePlaced = false;
+	bool m_positionFound = false;
 	int m_currentPress = 0;
-	std::vector<sf::Vector2f> m_initialPos;
+	std::vector<sf::Vector2f> m_resetPos;
 	sf::Vector2f m_mousePos = sf::Vector2f(0,0);
 	sf::Vector2f m_newPiecePos = sf::Vector2f(0, 0);
 	bool m_newPosFound = true;
