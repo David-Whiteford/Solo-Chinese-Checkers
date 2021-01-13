@@ -50,7 +50,7 @@ void GamePlay::render(sf::RenderWindow& t_window)
 {
 	m_board->Draw(t_window);
 
-	m_player.draw();
+	m_player.draw(t_window);
 
 	m_AI.draw();
 
