@@ -24,14 +24,15 @@ public:
 	void render(sf::RenderWindow& t_window);
 	void setup(sf::Font& t_font, sf::RenderWindow& t_window);
 	void initialise();
+
+	//Turn
+	static Turn m_currentTurn;
+
 private:
 	//Font
 	sf::Font m_font;
 	Player m_player;
 	AI m_AI;
-
-	//Turn
-	static Turn m_turn;
 
 	static const int m_amountOfPlayers = 2;
 	std::array<Button, m_amountOfPlayers> m_turnIndicator;
