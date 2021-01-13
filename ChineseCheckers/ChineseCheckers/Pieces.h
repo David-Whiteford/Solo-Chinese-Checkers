@@ -42,5 +42,5 @@ private:
 	sf::Sprite m_sprites;
 	int m_radius = 10;
 	std::vector<PegHoles*> m_neighboursPegs;
-
+	
 };

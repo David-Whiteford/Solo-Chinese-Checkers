@@ -32,10 +32,10 @@ void Board::Draw(sf::RenderWindow& t_window)
 			m_pegHolesVec[i]->draw();
 		}
 	}
-	for (int i = 0; i < m_raysVec.size(); ++i)
+	/*for (int i = 0; i < m_raysVec.size(); ++i)
 	{
 		t_window.draw(m_raysVec[i]->drawRay());
-	}
+	}*/
 }
 
 void Board::init()
@@ -157,7 +157,8 @@ std::vector<PegHoles*> Board::getPieceNeigthbours(Pieces* t_piece)
 {
 	for (int i = 0; i < m_pegHolesVec.size(); ++i)
 	{
-		if (m_colisions.pointCircleCol(t_piece->getPosition(), m_pegHolesVec[i]->getPosition(), m_radius))
+		sf::Vector2f offset = sf::Vector2f(10, 10);
+		if (m_colisions.pointCircleCol(t_piece->getPosition() + offset, m_pegHolesVec[i]->getPosition(), m_radius))
 		{
 			return m_pieceNeighbours = m_pegHolesVec[i]->getNeighbours();
 		}

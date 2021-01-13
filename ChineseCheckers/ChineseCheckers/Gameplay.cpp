@@ -24,7 +24,7 @@ void GamePlay::update(sf::Time t_deltaTime, sf::RenderWindow& t_window)
 
 void GamePlay::render(sf::RenderWindow& t_window)
 {
-	m_player.draw();
+	m_player.draw(t_window);
 
 	for (Button indicatorButton : m_turnIndicator)
 	{

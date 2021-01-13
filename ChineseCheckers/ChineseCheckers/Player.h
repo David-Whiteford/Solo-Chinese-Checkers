@@ -11,7 +11,7 @@ public:
 	~Player();
 	void movePiece(sf::RenderWindow& t_window);
 	void setUpPieces(sf::RenderWindow& t_window, Board* t_board);
-	void draw();
+	void draw(sf::RenderWindow& t_window);
 
 private:
 	Collisions m_colisions;
@@ -23,7 +23,9 @@ private:
 	int m_maxPlaces = 16;
 	std::vector<Raycast*> m_raysVec;
 	std::vector<Raycast*> m_endRaysVec;
+	std::vector<PegHoles*> m_neighboursVec;
 	std::vector<PegHoles*> m_pegHolesVec;
+	sf::CircleShape testCircle;
 	int m_pegRadius = 10;
 	int m_pieceIndex = 11;
 	int m_pegIndex = 0;
@@ -37,6 +39,6 @@ private:
 	sf::Vector2f m_mousePos = sf::Vector2f(0,0);
 	sf::Vector2f m_newPiecePos = sf::Vector2f(0, 0);
 	bool m_newPosFound = true;
-
+	sf::Vector2f m_offset = sf::Vector2f(10, 10);
 };
 

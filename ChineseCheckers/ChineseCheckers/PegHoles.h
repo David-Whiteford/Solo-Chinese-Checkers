@@ -35,6 +35,10 @@ public:
 	{
 		return m_pegHoles.getFillColor();
 	}
+	void setColor(sf::Color t_color)
+	{
+		m_pegHoles.setFillColor(t_color);
+	}
 	int getCol()
 	{
 		return m_col;
