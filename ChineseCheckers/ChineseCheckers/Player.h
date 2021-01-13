@@ -4,6 +4,7 @@
 #include "Collisions.h"
 #include "Pieces.h"
 #include "Board.h"
+
 class Player
 {
 public:
@@ -12,7 +13,8 @@ public:
 	void movePiece(sf::RenderWindow& t_window);
 	void setUpPieces(sf::RenderWindow& t_window, Board* t_board);
 	void draw(sf::RenderWindow& t_window);
-
+	void grabPiece(sf::RenderWindow& t_window);
+	void placePiece();
 private:
 	Collisions m_colisions;
 	Board* m_board;
@@ -40,6 +42,7 @@ private:
 	sf::Vector2f m_newPiecePos = sf::Vector2f(0, 0);
 	bool m_newPosFound = true;
 	sf::Vector2f m_offset = sf::Vector2f(10, 10);
+	sf::Vector2f m_newMousePos = sf::Vector2f(0, 0);
 
 };
 
