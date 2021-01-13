@@ -22,7 +22,7 @@ public:
 	~GamePlay();
 	void update(sf::Time t_deltaTime, sf::RenderWindow& t_window);
 	void render(sf::RenderWindow& t_window);
-	void setup(sf::Font& t_font, sf::RenderWindow& t_window,Board* t_board);
+	void setup(sf::Font& t_font, sf::RenderWindow& t_window);
 	void initialise();
 private:
 	//Font
@@ -37,6 +37,9 @@ private:
 	std::array<Button, m_amountOfPlayers> m_turnIndicator;
 	void currentTurn();
 	void m_nextPlayersTurn();
+
+	//Board
+	Board* m_board;
 
 
 };

@@ -34,12 +34,13 @@ void AI::draw()
 
 void AI::takeTurn()
 {
-	//bestMove();
+	//bestMove(1);
 	
 
 }
 
-//AiMove AI::bestMove(int t_player)
+//
+//AiMove AI::bestMove(int t_player, Board t_board)
 //{
 //
 //	//Check if Game is over
@@ -60,14 +61,12 @@ void AI::takeTurn()
 //	//Go through all of the pieces
 //	for (Pieces* piece : m_AIPieces)
 //	{
-//		//2.board(peg) return
+//		//Get vector to other
 //
-//		//board.getPieceNeighbours(piece)
 //
-//		board.getNeighbours(piece);
 //
 //		//Get array of surrounding peg holes
-//		std::vector<PegHoles*> adjacentPegHoles = piece.getNeighbours(); //<--------------------------------- NEED A FUNCTION TO RETURN VECTOR OF POINTERS TO PEG HOLES
+//		std::vector<PegHoles*> adjacentPegHoles =  //<--------------------------------- NEED A FUNCTION TO RETURN VECTOR OF POINTERS TO PEG HOLES
 //
 //
 //
@@ -150,5 +149,5 @@ void AI::takeTurn()
 //
 //	return moves.at(bestMove);
 //}
-
-
+//
+//

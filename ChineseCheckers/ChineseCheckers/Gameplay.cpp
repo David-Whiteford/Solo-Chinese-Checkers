@@ -4,6 +4,7 @@ Turn m_currentTurn{ Turn::Player};
 
 GamePlay::GamePlay()
 {
+	m_board = new Board();
 }
 
 GamePlay::~GamePlay()
@@ -24,6 +25,8 @@ void GamePlay::update(sf::Time t_deltaTime, sf::RenderWindow& t_window)
 
 void GamePlay::render(sf::RenderWindow& t_window)
 {
+	m_board->Draw(t_window);
+
 	m_player.draw();
 
 	m_AI.draw();
@@ -35,10 +38,13 @@ void GamePlay::render(sf::RenderWindow& t_window)
 
 }
 
-void GamePlay::setup(sf::Font& t_font, sf::RenderWindow& t_window, Board* t_board)
+void GamePlay::setup(sf::Font& t_font, sf::RenderWindow& t_window)
 {
-	m_player.setUpPieces(t_window,t_board);
-	m_AI.setUpPieces(t_window, t_board);
+	m_board->setMap(t_window);
+	m_board->setUpRays();
+
+	m_player.setUpPieces(t_window,m_board);
+	m_AI.setUpPieces(t_window, m_board);
 
 	for (Button indicatorButton : m_turnIndicator)
 	{
