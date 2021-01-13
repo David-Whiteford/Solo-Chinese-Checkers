@@ -1,6 +1,7 @@
 #include "Gameplay.h"
 
-Turn m_currentTurn{ Turn::Player};
+
+Turn GamePlay::m_currentTurn{ Turn::AI };
 
 GamePlay::GamePlay()
 {
@@ -13,13 +14,35 @@ GamePlay::~GamePlay()
 
 void GamePlay::update(sf::Time t_deltaTime, sf::RenderWindow& t_window)
 {
+
+	if (m_currentTurn == Turn::AI)
+	{
+		//Update the AI
+		m_AI.update(m_board);
+		//m_AI.takeTurn();
+	}
+	else
+	{
+		//Players Turn here
+		m_player.movePiece(t_window);
+	}
+
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Enter))
+	{
+		if (m_currentTurn == Turn::Player)
+		{
+			m_currentTurn = Turn::AI;
+		}
+	}
+
+	currentTurn();
 	for (Button indicatorButton : m_turnIndicator)
 	{
 		indicatorButton.update(t_deltaTime);
 	}
-	currentTurn();
 
-	m_player.movePiece(t_window);
+
+
 
 }
 

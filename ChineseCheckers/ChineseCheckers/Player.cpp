@@ -78,7 +78,7 @@ void Player::movePiece(sf::RenderWindow& t_window)
 		m_doOnce = 0;
 	}
 	PegHoles* peg = m_board->getPegHole(m_raysVec[6]);
-	std::cout << "PEg PosX: " << peg->getPosition().x << "PEg PosY: " << peg->getPosition().y << std::endl;
+	//std::cout << "PEg PosX: " << peg->getPosition().x << "PEg PosY: " << peg->getPosition().y << std::endl;
 }
 
 void Player::setUpPieces(sf::RenderWindow& t_window,Board *t_board)
