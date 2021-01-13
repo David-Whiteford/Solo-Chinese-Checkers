@@ -64,7 +64,7 @@ void GamePlay::render(sf::RenderWindow& t_window)
 
 	m_player.draw(t_window);
 
-	m_AI.draw();
+	m_AI.draw(t_window);
 
 	for (Button indicatorButton : m_turnIndicator)
 	{

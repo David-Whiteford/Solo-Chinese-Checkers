@@ -1,6 +1,7 @@
 #pragma once
 #include "GameObject.h"
 #include "PegHoles.h"
+#include "Raycast.h"
 #include <SFML/Graphics.hpp>
 #include <SFML/OpenGL.hpp>
 class Pieces : public GameObject
@@ -32,6 +33,14 @@ public:
 	{
 		return m_neighboursPegs;
 	}
+	void setNeighboursRays(Raycast* t_ray)
+	{
+		m_neighboursRays.push_back(t_ray);
+	}
+	std::vector<Raycast*> getNeighboursRays()
+	{
+		return m_neighboursRays;
+	}
 	void draw()
 	{
 		m_window.draw(m_piece);
@@ -42,5 +51,5 @@ private:
 	sf::Sprite m_sprites;
 	int m_radius = 10;
 	std::vector<PegHoles*> m_neighboursPegs;
-
+	std::vector<Raycast*> m_neighboursRays;
 };

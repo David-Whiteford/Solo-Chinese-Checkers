@@ -92,7 +92,6 @@ std::vector<Raycast*> Board::getRays()
 {
 	return m_raysVec;
 }
-
 void Board::setUpRays()
 {
 	float distance;

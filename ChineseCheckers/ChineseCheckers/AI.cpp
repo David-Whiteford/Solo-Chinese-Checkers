@@ -23,12 +23,17 @@ void AI::setUpPieces(sf::RenderWindow& t_window, Board* t_board)
 	}
 }
 
-void AI::draw()
+void AI::draw(sf::RenderWindow& t_window)
 {
 	for (int i = 0; i < m_AIPieces.size(); ++i)
 	{
 		m_AIPieces[i]->draw();
 	}
+	for (int i = 0; i < m_endrays.size(); i++)
+	{
+		t_window.draw(m_endrays[i]->drawRay());
+	}
+	
 }
 
 void AI::update(Board* t_board)
@@ -40,10 +45,10 @@ void AI::update(Board* t_board)
 
 	takeTurn();
 	std::vector<PegHoles*> adjacentPegHoles = m_board->getPieceNeigthbours(m_AIPieces.at(0));
-	for (PegHoles* adjacentPegHole : adjacentPegHoles)
+	/*for (PegHoles* adjacentPegHole : adjacentPegHoles)
 	{
 		adjacentPegHole->changeColor(sf::Color::Magenta);
-	}
+	}*/
 	
 
 
@@ -65,11 +70,30 @@ AiMove AI::bestMove(int t_player, Board t_board, int t_depth = 0)
 {
 	//std::cout << t_depth << std::endl;
 	std::vector<AiMove> moves;
-
+	m_raysVec = m_board->getRays();
 	//Go through all of the pieces
 	for (Pieces* piece : m_AIPieces)
 	{
+		std::cout << "piece vec Size: " << m_AIPieces.size() << std::endl;
 		sf::Vector2f originalPos = piece->getPosition();
+		//if (m_doOnce == 0)
+		//{
+		//	for (int i = 0; i < m_raysVec.size(); i++)
+		//	{
+		//		if (m_colisions.pointCircleCol(m_raysVec[i]->getRayStartPos(),
+		//			piece->getPosition() + m_offset, m_pegRadius))
+		//		{
+		//			m_endrays.push_back(m_raysVec[i]);
+		//			piece->setNeighboursRays(m_raysVec[i]);
+		//		}
+		//	}
+		//	m_doOnce++;
+		//	//std::cout << "Ray Size: " << m_endrays.size() << std::endl;
+		//}
+		
+
+
+
 
 		//Get array of surrounding peg holes
 		std::vector<PegHoles*> adjacentPegHoles = t_board.getPieceNeigthbours(piece);
@@ -118,7 +142,7 @@ AiMove AI::bestMove(int t_player, Board t_board, int t_depth = 0)
 				std::cout << "Called" << std::endl;
 				//Perform Move
 				piece->setPosition(pegHole->getPosition());
-
+				//m_doOnce = 0;
 
 				availibleMove.aiPiece = piece;
 				availibleMove.destinationPegHole = pegHole;
@@ -166,7 +190,7 @@ AiMove AI::bestMove(int t_player, Board t_board, int t_depth = 0)
 	}
 
 	
-
+	
 	return moves.at(bestMove);
 }
 
