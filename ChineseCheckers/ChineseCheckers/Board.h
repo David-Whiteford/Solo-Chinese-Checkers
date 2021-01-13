@@ -37,6 +37,8 @@ private:
 	std::vector<PegHoles*> m_pegHolesVec;
 	std::vector<Raycast*> m_raysVec;
 	std::vector<PegHoles*> m_pieceNeighbours;
+	std::vector<Pieces* > m_playerPieces;
+	std::vector<Pieces* > m_enemyPieces;
 	int m_radius = 10;
 	int m_tileSize = 20;
 	int lvl1[ROWS][COLS] = {

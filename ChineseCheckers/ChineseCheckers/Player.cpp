@@ -103,6 +103,7 @@ void Player::movePiece(sf::RenderWindow& t_window)
 				m_newPiecePos = m_resetPos[m_pieceIndex];
 			}
 		}
+		
 		testCircle.setPosition(m_newPiecePos);
 		for (int i = 0; i < m_pegHolesVec.size(); i++)
 		{
