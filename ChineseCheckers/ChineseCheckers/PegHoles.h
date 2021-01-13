@@ -63,6 +63,13 @@ public:
 	bool getPegOccupied() { return m_pegOccupied; }
 	GameObject* myGameObject;
 
+
+	//Debug Function
+	void changeColor(sf::Color t_color)
+	{
+		m_pegHoles.setFillColor(t_color);
+	}
+
 private:
 	sf::CircleShape m_pegHoles;
 	sf::RenderWindow& m_window;
@@ -74,5 +81,7 @@ private:
 	int m_row = 0;
 	int m_col = 0;
 	std::vector<PegHoles*> m_neighboursPegs;
+
+
 
 };

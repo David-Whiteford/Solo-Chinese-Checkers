@@ -33,7 +33,7 @@ private:
 	//All Pieces and Pegholes
 	std::vector<Pieces*> m_AIPieces;
 	std::vector<PegHoles*> m_pegHolesVec;
-	const int MAX_PIECES = 10;
+	//const int MAX_PIECES = 10;
 	//const int m_places = 16;
 	const int m_places = 1;
 	const int m_AI_PLAYER = 1;

@@ -27,11 +27,23 @@ void GamePlay::update(sf::Time t_deltaTime, sf::RenderWindow& t_window)
 		m_player.movePiece(t_window);
 	}
 
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Enter))
+	if (m_timer < m_minWaitForTime)
 	{
-		if (m_currentTurn == Turn::Player)
+		m_timer += t_deltaTime.asMilliseconds();
+	}
+
+	if (m_timer >= m_minWaitForTime)
+	{
+
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Enter))
 		{
-			m_currentTurn = Turn::AI;
+
+
+			if (m_currentTurn == Turn::Player)
+			{
+				m_currentTurn = Turn::AI;
+			}
+			m_timer = 0;
 		}
 	}
 

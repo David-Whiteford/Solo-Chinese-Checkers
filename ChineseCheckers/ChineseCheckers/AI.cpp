@@ -3,6 +3,7 @@
 
 AI::AI()
 {
+	srand(time(NULL));
 }
 
 AI::~AI()
@@ -17,7 +18,7 @@ void AI::setUpPieces(sf::RenderWindow& t_window, Board* t_board)
 		if (t_board->getBoardHoles()[i]->getColor() == sf::Color::Green) {}
 		else
 		{
-			m_AIPieces.push_back(new Pieces(t_window, t_board->getBoardHoles()[i]->getPosition(), sf::Color::Red));
+			m_AIPieces.push_back(new Pieces(t_window, t_board->getBoardHoles()[i -11 ]->getPosition(), sf::Color::Red));
 		}
 	}
 }
@@ -34,8 +35,17 @@ void AI::update(Board* t_board)
 {
 
 	m_board = t_board;
+	
+	
 
 	takeTurn();
+	std::vector<PegHoles*> adjacentPegHoles = m_board->getPieceNeigthbours(m_AIPieces.at(0));
+	for (PegHoles* adjacentPegHole : adjacentPegHoles)
+	{
+		adjacentPegHole->changeColor(sf::Color::Magenta);
+	}
+	
+
 
 
 
@@ -53,28 +63,18 @@ void AI::takeTurn()
 
 AiMove AI::bestMove(int t_player, Board t_board, int t_depth = 0)
 {
-	/*
-	//Check if Game is over
-	int rv;
-	//rv = board.checkVictory();
-
-	//AiWin
-	if (rv == m_AI_PLAYER) {
-		return AiMove(10);
-	}
-	//PlayerWin
-	else if (rv == m_HUMAN_PLAYER) {
-		return AiMove(-10);
-	}
-	*/
-
+	//std::cout << t_depth << std::endl;
 	std::vector<AiMove> moves;
 
 	//Go through all of the pieces
 	for (Pieces* piece : m_AIPieces)
 	{
+		sf::Vector2f originalPos = piece->getPosition();
+
 		//Get array of surrounding peg holes
-		std::vector<PegHoles*> adjacentPegHoles = t_board.getPieceNeigthbours(piece); //<--------------------------------- NEED A FUNCTION TO RETURN VECTOR OF POINTERS TO PEG HOLES
+		std::vector<PegHoles*> adjacentPegHoles = t_board.getPieceNeigthbours(piece);
+
+
 
 		//Go through each adjacent Hole
 		for (PegHoles* pegHole : adjacentPegHoles)
@@ -83,7 +83,7 @@ AiMove AI::bestMove(int t_player, Board t_board, int t_depth = 0)
 			AiMove availibleMove;
 
 			//Check Ocupied
-			if (pegHole->getPegOccupied()) //<----------------------------------------------- NEED FUNCTION RETURNING BOOL TO CHECK OCUPIED 
+			if (pegHole->getPegOccupied())
 			{
 				//Difference between two vectors
 				//sf::Vector2f vectorToPeghole()
@@ -115,23 +115,21 @@ AiMove AI::bestMove(int t_player, Board t_board, int t_depth = 0)
 			}
 			else
 			{
+				std::cout << "Called" << std::endl;
+				//Perform Move
+				piece->setPosition(pegHole->getPosition());
 
-			}
 
-			//Perform Move
-			
-			piece->setPosition(pegHole->getPosition());
-			sf::Vector2f originalPos = piece->getPosition();
-
-			availibleMove.aiPiece = piece;
-			availibleMove.destinationPegHole = pegHole;
-			//performMove(availibleMove, t_board);
-		
+				availibleMove.aiPiece = piece;
+				availibleMove.destinationPegHole = pegHole;
+				availibleMove.score = rand() % 300;
+			}			
 
 			//Reccusively min max
 			if (t_depth < MAX_DEPTH)
 			{
 				if (t_player == m_AI_PLAYER) {
+
 					availibleMove.score = bestMove(m_HUMAN_PLAYER, t_board, t_depth + 1).score;
 				}
 				else {
@@ -167,7 +165,7 @@ AiMove AI::bestMove(int t_player, Board t_board, int t_depth = 0)
 		}
 	}
 
-	std::cout << "Thinking" << std::endl;
+	
 
 	return moves.at(bestMove);
 }

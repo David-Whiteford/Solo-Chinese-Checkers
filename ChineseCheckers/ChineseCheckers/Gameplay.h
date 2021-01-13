@@ -43,4 +43,8 @@ private:
 	Board* m_board;
 
 
+	//timer
+	float m_timer = 0;
+	float m_minWaitForTime = 250;
+
 };

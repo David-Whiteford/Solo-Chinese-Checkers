@@ -159,9 +159,9 @@ std::vector<PegHoles*> Board::getPieceNeigthbours(Pieces* t_piece)
 
 	for (int i = 0; i < m_pegHolesVec.size(); ++i)
 	{
-		if (m_colisions.pointCircleCol(t_piece->getPosition() - offset, m_pegHolesVec[i]->getPosition(), m_radius))
+		if (m_colisions.pointCircleCol(t_piece->getPosition() + offset, m_pegHolesVec[i]->getPosition(), m_radius))
 		{
-			return m_pieceNeighbours = m_pegHolesVec[i]->getNeighbours();
+			return m_pegHolesVec[i]->getNeighbours();
 		}
 	}
 }
