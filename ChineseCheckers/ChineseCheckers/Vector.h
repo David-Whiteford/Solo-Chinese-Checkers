@@ -37,5 +37,6 @@ public:
 	// projection of other onto the current vector so answer will parralell to current vector.
 	MyVector2 rejection(const MyVector2 t_other)const;
 
+
 }; 
 #endif // !MYVECTOR2

@@ -168,7 +168,7 @@ void Board::setUpRays()
 std::vector<PegHoles*> Board::setNeighbours(Pieces* t_piece)
 {
 	std::vector<PegHoles*>m_neighboursVec;
-	m_neighboursVec.clear();
+	//m_neighboursVec.clear();
 
 
 	for (int i = 0; i < m_raysVec.size(); i++)

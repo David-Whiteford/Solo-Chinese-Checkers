@@ -13,7 +13,7 @@ AI::~AI()
 void AI::setUpPieces(sf::RenderWindow& t_window, Board* t_board)
 {
 	m_pegHolesVec = t_board->getBoardHoles();
-	for (int i = t_board->getBoardHoles().size() - 1; i > t_board->getBoardHoles().size() - m_places - 1;--i)
+	for (int i = t_board->getBoardHoles().size() - 1; i > t_board->getBoardHoles().size() - m_places -7;--i)
 	{
 		if (t_board->getBoardHoles()[i]->getColor() == sf::Color::Green) {}
 		else
@@ -81,12 +81,14 @@ AiMove AI::bestMove(int t_player, Board t_board, int t_depth = 0)
 			}
 			else
 			{
-				//Perform Move
-				piece->setPosition(pegHole->getPosition());
 
 				availibleMove.aiPiece = piece;
 				availibleMove.destinationPegHole = pegHole;
-				availibleMove.score = rand() % 300;
+				availibleMove.score = m_scoring(&availibleMove);
+
+				//Perform Move
+				piece->setPosition(pegHole->getPosition());
+				//availibleMove.score = rand() % 300;
 			}
 			
 			if (t_depth < MAX_DEPTH)
@@ -99,7 +101,6 @@ AiMove AI::bestMove(int t_player, Board t_board, int t_depth = 0)
 					availibleMove.score = bestMove(m_AI_PLAYER, t_board, t_depth + 1).score;
 				}
 			}
-			
 
 			//Undo move
 			piece->setPosition(originalPos);
@@ -131,8 +132,6 @@ AiMove AI::bestMove(int t_player, Board t_board, int t_depth = 0)
 		}
 	}
 
-
-
 	return moves.at(bestMove);
 }
 
@@ -144,6 +143,45 @@ void AI::performMove(AiMove t_move, Board t_board)
 void AI::undoMove(AiMove t_move)
 {
 	t_move.aiPiece->setPosition(t_move.destinationPegHole->getPosition());
+}
+
+int AI::m_scoring(AiMove* t_move)
+{
+	//Score
+	int score = 0;
+
+	//Distance Travelled
+	//Starting Vectors
+	sf::Vector2f originalPos =  t_move->aiPiece->getPosition();
+	sf::Vector2f destinationPos = t_move->destinationPegHole->getPosition();
+	sf::Vector2f vectorTravelled;
+	//Distance as float
+	vectorTravelled.x = originalPos.x - destinationPos.x;
+	vectorTravelled.y = originalPos.y - destinationPos.y;
+	float distanceTravelled = std::sqrt(vectorTravelled.x * vectorTravelled.x + vectorTravelled.y * vectorTravelled.y);
+	//Scoring Distance Travlled
+	if (distanceTravelled >= 60)
+	{
+		score += 5;
+		std::cout << "Checking " << std::endl;
+	}
+	else if (distanceTravelled >= 40)
+	{
+		score += 3;
+	}
+	else if (distanceTravelled > 20)
+	{
+		score += 1;
+	}
+
+	//Distance to End goal
+	//sf::Vector2f destinationPos;
+
+
+
+
+
+	return score;
 }
 
 
