@@ -166,12 +166,12 @@ void Board::setUpRays()
 //	}
 //}
 
+
+
 std::vector<PegHoles*> Board::setNeighbours(Pieces* t_piece)
 {
 	std::vector<PegHoles*>m_neighboursVec;
-	//m_neighboursVec.clear();
-
-
+	
 	for (int i = 0; i < m_raysVec.size(); i++)
 	{
 		if (m_colisions.pointCircleCol(m_raysVec[i]->getRayStartPos(), t_piece->getPosition(), m_radius))
@@ -179,9 +179,6 @@ std::vector<PegHoles*> Board::setNeighbours(Pieces* t_piece)
 			m_neighboursRaysVec.push_back(m_raysVec[i]);
 		}
 	}
-
-	
-
 	for (int i = 0; i < m_pegHolesVec.size(); i++)
 	{
 		for (int j = 0; j < m_neighboursRaysVec.size(); j++)
@@ -220,4 +217,20 @@ void Board::setPegHoleOccupied(std::vector<Pieces*> t_pieces)
 			}
 		}
 	}
+}
+
+std::vector<Raycast*> Board::setNeighboursRays(Pieces* t_piece)
+{
+	m_neighboursRaysVec.clear();
+	std::vector<PegHoles*>m_neighboursVec;
+
+	for (int i = 0; i < m_raysVec.size(); i++)
+	{
+		if (m_colisions.pointCircleCol(m_raysVec[i]->getRayStartPos(), t_piece->getPosition(), m_radius))
+		{
+			m_neighboursRaysVec.push_back(m_raysVec[i]);
+		}
+	}
+	
+	return m_neighboursRaysVec;
 }

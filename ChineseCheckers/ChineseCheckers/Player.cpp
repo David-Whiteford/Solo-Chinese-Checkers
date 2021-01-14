@@ -41,7 +41,7 @@ void Player::draw(sf::RenderWindow& t_window)
 	{
 		t_window.draw(m_endRaysVec[i]->drawRay());
 	}
-
+	t_window.draw(m_jumpRay->drawRay());
 	
 }
 void Player::grabPiece(sf::RenderWindow& t_window)
@@ -91,33 +91,12 @@ void Player::grabPiece(sf::RenderWindow& t_window)
 
 void Player::placePiece()
 {
-	Raycast* ray = new Raycast(sf::Vector2f(0, 0), sf::Vector2f(0, 0), 0);
 	if (m_pieceHeld)
 	{
 		m_playerPieces[m_pieceIndex]->setPosition(m_newMousePos - m_offset);
-		sf::Vector2f originalRayEndPos;
-		for (int i = 0; i < m_endRaysVec.size(); i++)
-		{
-			//std::cout << "I " << i << std::endl;
-			if (m_colisions.pointCircleCol(m_endRaysVec[i]->getEndPoint(), m_playerPieces[m_pieceIndex]->getPosition(), m_pegRadius))
-			{
+		pegOccupiedCheck();
+		checkEndRaysCol(m_endRaysVec);
 		
-				m_newPiecePos = m_endRaysVec[i]->getEndPoint() - m_offset;
-				m_piecePlaced = true;
-				m_positionFound = true;
-				return;
-			}
-			else if (m_colisions.pointCircleCol(m_endRaysVec[i]->getEndPoint(),
-				m_playerPieces[m_pieceIndex]->getPosition(), m_pegRadius) == false)
-			{
-				m_newPiecePos = m_resetPos[m_pieceIndex];
-			}
-			else if (m_pegHolesVec[m_pegIndex]->getPegOccupied() == true)
-			{
-				m_endRaysVec[i]->setRayValues(m_endRaysVec[i]->getRayStartPos(), m_endRaysVec[i]->getDirection(),
-					m_endRaysVec[i]->getRayLength() * 2);
-			}
-		}
 		for (int i = 0; i < m_pegHolesVec.size(); i++)
 		{
 			sf::Vector2f point = m_playerPieces[m_pieceIndex]->getPosition();
@@ -128,39 +107,62 @@ void Player::placePiece()
 			}
 			//std::cout << "IS Occupied: " << m_pegHolesVec[i]->getPegOccupied() << std::endl;
 		}
-		for (int i = 0; i < m_playerPieces.size(); i++)
-		{
-			for (int j = 0; j < m_playerPieces.size(); j++)
-			{
-
-				if (i == j) {}
-				else
-				{
-					if (m_colisions.pointCircleCol(m_playerPieces[i]->getPosition(),
-						m_playerPieces[j]->getPosition(), m_pegRadius))
-					{
-						m_jumpRay = new Raycast(ray->getEndPoint(), ray->getDirection(), ray->getRayLength());
-						m_newPiecePos = m_jumpRay->getEndPoint();
-					}
-				}
-
-			}
-		}
-
-		m_pegIndex = 0;
 	}
 	if (m_moseButtonReleased)
 	{
-		if (m_pegHolesVec[m_pegIndex]->getPegOccupied() == false)
-		{
-			m_resetPos[m_pieceIndex] = m_newPiecePos;
-			m_playerPieces[m_pieceIndex]->setPosition(m_newPiecePos);
-		
-		}
-		sf::Vector2f offset = sf::Vector2f(10, 10);
+		m_resetPos[m_pieceIndex] = m_newPiecePos;
+		m_playerPieces[m_pieceIndex]->setPosition(m_newPiecePos);
 		m_board->setPegHoleOccupied(m_playerPieces);
 		m_pieceHeld = false;
 		m_endRaysVec.clear();
 		m_doOnce = 0;
+		m_jumpAvailable = 0;
 	}
+}
+
+void Player::checkEndRaysCol(std::vector<Raycast*> t_pegNeighbours)
+{
+	for (int i = 0; i < t_pegNeighbours.size(); i++)
+	{
+		//std::cout << "I " << i << std::endl;
+		if (m_colisions.pointCircleCol(t_pegNeighbours[i]->getEndPoint(),
+			m_playerPieces[m_pieceIndex]->getPosition(), m_pegRadius))
+		{
+			m_newPiecePos = t_pegNeighbours[i]->getEndPoint() - m_offset;
+			return;
+		}
+		else if (m_colisions.pointCircleCol(t_pegNeighbours[i]->getEndPoint(),
+			m_playerPieces[m_pieceIndex]->getPosition(), m_pegRadius) == false)
+		{
+			m_newPiecePos = m_resetPos[m_pieceIndex];
+		}
+	}
+}
+
+void Player::pegOccupiedCheck()
+{
+	for (int i = 0; i < m_playerPieces.size(); i++)
+	{
+		for (int j = 0; j < m_playerPieces.size(); j++)
+		{
+			if (i == j) {}
+			else
+			{
+				
+				if (m_colisions.pointCircleCol(m_playerPieces[i]->getPosition() + m_offset,
+					m_playerPieces[j]->getPosition(), m_pegRadius))
+				{
+					if (m_jumpAvailable == 0)
+					{
+						std::vector<Raycast*> pegNeighbours = m_board->setNeighboursRays(m_playerPieces[m_pieceIndex]);
+						m_endRaysVec.clear();
+						m_endRaysVec = pegNeighbours;
+						m_jumpMoves++;
+					}
+				}
+			}
+
+		}
+	}
+
 }

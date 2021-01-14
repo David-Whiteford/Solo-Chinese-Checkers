@@ -15,6 +15,9 @@ public:
 	void draw(sf::RenderWindow& t_window);
 	void grabPiece(sf::RenderWindow& t_window);
 	void placePiece();
+	void checkEndRaysCol(std::vector<Raycast*> t_pegNeighbours);
+	void pegOccupiedCheck();
+
 private:
 	Collisions m_colisions;
 	Board* m_board;
@@ -43,6 +46,9 @@ private:
 	bool m_newPosFound = true;
 	sf::Vector2f m_offset = sf::Vector2f(10, 10);
 	sf::Vector2f m_newMousePos = sf::Vector2f(0, 0);
+	bool m_insidePiece = false;
+	int m_rayEndIndex = 0;
+	int m_jumpAvailable = 0;
 
 };
 
