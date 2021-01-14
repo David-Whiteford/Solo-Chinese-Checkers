@@ -54,6 +54,9 @@ private:
 	void performMove(AiMove t_move, Board t_board);
 	void undoMove(AiMove t_move);
 	sf::Vector2f m_offset = sf::Vector2f(10, 10);
-	int MAX_DEPTH = 0;
+	int MAX_DEPTH = 1;
+
+	int m_scoring(AiMove* t_move);
+
 
 };

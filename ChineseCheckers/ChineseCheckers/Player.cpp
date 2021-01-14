@@ -46,8 +46,6 @@ void Player::draw(sf::RenderWindow& t_window)
 		t_window.draw(m_endRaysVec[i]->drawRay());
 	}
 
-	std::cout << m_endRaysVec.size() << std::endl;
-
 	t_window.draw(testCircle);
 }
 void Player::grabPiece(sf::RenderWindow& t_window)
