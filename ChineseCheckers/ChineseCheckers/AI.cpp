@@ -21,6 +21,16 @@ void AI::setUpPieces(sf::RenderWindow& t_window, Board* t_board)
 			m_AIPieces.push_back(new Pieces(t_window, t_board->getBoardHoles()[i]->getPosition(), sf::Color::Red));
 		}
 	}
+
+	for (int i = 0; i < 16; i++)
+	{
+		if (t_board->getBoardHoles()[i]->getColor() == sf::Color::Green) {}
+		else
+		{
+			m_goalPegHoles.push_back(t_board->getBoardHoles()[i]);
+		}
+	}
+
 }
 
 void AI::draw(sf::RenderWindow& t_window)
@@ -33,6 +43,14 @@ void AI::draw(sf::RenderWindow& t_window)
 	{
 		t_window.draw(m_endrays[i]->drawRay());
 	}
+
+	//Goal PegHoles
+	/*
+	for (PegHoles* peghole : m_goalPegHoles)
+	{
+		//peghole->changeColor(sf::Color::Yellow);
+	}
+	*/
 	
 }
 
@@ -69,7 +87,7 @@ AiMove AI::bestMove(int t_player, Board t_board, int t_depth = 0)
 		//Go through each adjacent Hole
 		for (PegHoles* pegHole :adjacentPegHoles)
 		{
-			//pegHole->changeColor(sf::Color::Magenta);
+			pegHole->changeColor(sf::Color::Magenta);
 
 			//Create the move
 			AiMove availibleMove;
@@ -86,29 +104,31 @@ AiMove AI::bestMove(int t_player, Board t_board, int t_depth = 0)
 				availibleMove.destinationPegHole = pegHole;
 				availibleMove.score = m_scoring(&availibleMove);
 
+
 				//Perform Move
 				piece->setPosition(pegHole->getPosition());
-				//availibleMove.score = rand() % 300;
 			}
 			
 			if (t_depth < MAX_DEPTH)
 			{
+	
+			
 				if (t_player == m_AI_PLAYER) {
-
-					availibleMove.score = bestMove(m_HUMAN_PLAYER, t_board, t_depth + 1).score;
+						availibleMove.score = bestMove(m_HUMAN_PLAYER, t_board, t_depth + 1).score;
+					}
+					else {
+						availibleMove.score = bestMove(m_AI_PLAYER, t_board, t_depth + 1).score;
+					}
 				}
-				else {
-					availibleMove.score = bestMove(m_AI_PLAYER, t_board, t_depth + 1).score;
-				}
-			}
+			
 
 			//Undo move
 			piece->setPosition(originalPos);
 
 			moves.push_back(availibleMove);
+	
 		}	
 
-		adjacentPegHoles.clear();
 	}
 
 	// Pick the best move for the current player
@@ -122,6 +142,7 @@ AiMove AI::bestMove(int t_player, Board t_board, int t_depth = 0)
 			}
 		}
 	}
+	
 	else {
 		int bestScore = 1000000;
 		for (int i = 0; i < moves.size(); i++) {
@@ -133,6 +154,8 @@ AiMove AI::bestMove(int t_player, Board t_board, int t_depth = 0)
 	}
 
 	return moves.at(bestMove);
+
+	
 }
 
 void AI::performMove(AiMove t_move, Board t_board)
@@ -175,12 +198,54 @@ int AI::m_scoring(AiMove* t_move)
 	}
 
 	//Distance to End goal
-	//sf::Vector2f destinationPos;
+	for (PegHoles* pegHole : m_goalPegHoles)
+	{
 
 
+		if (!pegHole->getPegOccupied())
+		{
+			sf::Vector2f goalPos = pegHole->getPosition();
+			sf::Vector2f distanceVecToGoal;
 
+			distanceVecToGoal.x = destinationPos.x - goalPos.x;
+			distanceVecToGoal.y = destinationPos.y - goalPos.y;
 
+			float distanceToGoal = std::sqrt(distanceVecToGoal.x * distanceVecToGoal.x + distanceVecToGoal.y * distanceVecToGoal.y);
 
+			if (distanceToGoal < 21)
+			{
+				score = 0;
+			}
+			else if (distanceToGoal < 41)
+			{
+				score += 0;
+			}
+			else if (distanceToGoal < 81)
+			{
+				score += 6;
+			}
+			else if (distanceToGoal < 121)
+			{
+				score += 5;
+			}
+			else if (distanceToGoal < 161)
+			{
+				score += 4;
+			}
+			else if (distanceToGoal < 201)
+			{
+				score += 3;
+			}
+			else if (distanceToGoal < 241)
+			{
+				score += 2;
+			}
+			else if (distanceToGoal < 281)
+			{
+				score += 1;
+			}
+		}
+	}
 	return score;
 }
 
