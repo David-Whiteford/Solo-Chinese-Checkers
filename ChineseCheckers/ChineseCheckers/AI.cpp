@@ -70,29 +70,15 @@ AiMove AI::bestMove(int t_player, Board t_board, int t_depth = 0)
 {
 	//std::cout << t_depth << std::endl;
 	std::vector<AiMove> moves;
-	m_raysVec = m_board->getRays();
-	//Go through all of the pieces
 	for (Pieces* piece : m_AIPieces)
 	{
-		std::cout << "piece vec Size: " << m_AIPieces.size() << std::endl;
+		//std::cout << "piece vec Size: " << m_AIPieces.size() << std::endl;
 		sf::Vector2f originalPos = piece->getPosition();
-		//if (m_doOnce == 0)
-		//{
-		//	for (int i = 0; i < m_raysVec.size(); i++)
-		//	{
-		//		if (m_colisions.pointCircleCol(m_raysVec[i]->getRayStartPos(),
-		//			piece->getPosition() + m_offset, m_pegRadius))
-		//		{
-		//			m_endrays.push_back(m_raysVec[i]);
-		//			piece->setNeighboursRays(m_raysVec[i]);
-		//		}
-		//	}
-		//	m_doOnce++;
-		//	//std::cout << "Ray Size: " << m_endrays.size() << std::endl;
-		//}
 		
 
 
+		m_neighboursVec = m_board->setNeighbours(piece);
+		std::cout << "neighboursVec Size: " << m_neighboursVec.size() << std::endl;
 
 
 		//Get array of surrounding peg holes

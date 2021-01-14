@@ -37,6 +37,7 @@ private:
 	std::vector<PegHoles*> m_pegHolesVec;
 	std::vector<Raycast*> m_endrays;
 	std::vector<Raycast*> m_raysVec;
+	std::vector<PegHoles*>m_neighboursVec;
 	//The size of the piece radius
 	int m_pegRadius = 10;
 	//const int MAX_PIECES = 10;

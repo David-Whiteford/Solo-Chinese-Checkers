@@ -14,6 +14,15 @@ public:
 	{
 		return m_positon;
 	}
+	sf::Vector2f getDirection()
+	{
+		return m_direction;
+	}
+	float getRayLength()
+	{
+		return m_rayLength;
+	}
+
 	bool hit(sf::Vector2f t_targetPosition, float t_targetRadius);
 	sf::VertexArray drawRay();
 	bool isInterpolating();

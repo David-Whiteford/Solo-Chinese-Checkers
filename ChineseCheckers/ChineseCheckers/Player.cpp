@@ -97,20 +97,27 @@ void Player::placePiece()
 	if (m_pieceHeld)
 	{
 		m_playerPieces[m_pieceIndex]->setPosition(m_newMousePos - m_offset);
+		sf::Vector2f originalRayEndPos;
 		for (int i = 0; i < m_endRaysVec.size(); i++)
 		{
 			//std::cout << "I " << i << std::endl;
 			if (m_colisions.pointCircleCol(m_endRaysVec[i]->getEndPoint(), m_playerPieces[m_pieceIndex]->getPosition(), m_pegRadius))
 			{
-				//m_playerPieces[m_pieceIndex]->setPosition(m_endRaysVec[i]->getEndPoint() - offset);
+		
 				m_newPiecePos = m_endRaysVec[i]->getEndPoint() - m_offset;
 				m_piecePlaced = true;
 				m_positionFound = true;
 				return;
 			}
-			else
+			else if (m_colisions.pointCircleCol(m_endRaysVec[i]->getEndPoint(),
+				m_playerPieces[m_pieceIndex]->getPosition(), m_pegRadius) == false)
 			{
 				m_newPiecePos = m_resetPos[m_pieceIndex];
+			}
+			else if (m_pegHolesVec[m_pegIndex]->getPegOccupied() == true)
+			{
+				m_endRaysVec[i]->setRayValues(m_endRaysVec[i]->getRayStartPos(), m_endRaysVec[i]->getDirection(),
+					m_endRaysVec[i]->getRayLength() * 2);
 			}
 		}
 

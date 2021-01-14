@@ -165,4 +165,28 @@ std::vector<PegHoles*> Board::getPieceNeigthbours(Pieces* t_piece)
 	}
 }
 
+std::vector<PegHoles*> Board::setNeighbours(Pieces* t_piece)
+{
 
+	for (int i = 0; i < m_raysVec.size(); i++)
+	{
+		if (m_colisions.pointCircleCol(m_raysVec[i]->getRayStartPos(), t_piece->getPosition(), m_radius))
+		{
+			m_neighboursRaysVec.push_back(m_raysVec[i]);
+		}
+	}
+	for (int i = 0; i < m_pegHolesVec.size(); i++)
+	{
+		for (int j = 0; j < m_neighboursRaysVec.size(); j++)
+		{
+			if (m_colisions.pointCircleCol(m_neighboursRaysVec[j]->getEndPoint(), m_pegHolesVec[i]->getPosition(), m_radius))
+			{
+				m_neighboursVec.push_back(m_pegHolesVec[i]);
+				//t_piece->setNeighbours(m_neighboursVec);
+			}
+		}
+	}
+	return m_neighboursVec;
+
+
+}
