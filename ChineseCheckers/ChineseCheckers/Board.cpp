@@ -199,3 +199,24 @@ std::vector<PegHoles*> Board::setNeighbours(Pieces* t_piece)
 
 
 }
+
+void Board::setPegHoleOccupied(std::vector<Pieces*> t_pieces)
+{
+	for (int i = 0; i < t_pieces.size(); i++)
+	{
+		for (int j = 0; j < m_pegHolesVec.size(); j++)
+		{
+			if (m_colisions.pointCircleCol(t_pieces[i]->getPosition() + m_offset,
+				m_pegHolesVec[j]->getPosition(), m_radius))
+			{
+				m_pegHolesVec[j]->setPegOccupied(true);
+				m_pegHolesVec[j]->setTeamTag("Blue");
+			}
+			else
+			{
+				m_pegHolesVec[j]->setPegOccupied(false);
+				m_pegHolesVec[j]->setTeamTag("White");
+			}
+		}
+	}
+}

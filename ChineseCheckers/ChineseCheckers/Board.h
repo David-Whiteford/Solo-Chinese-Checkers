@@ -26,6 +26,7 @@ public:
 	//PegHoles* getPegHole(Raycast* t_ray);
 	//std::vector<PegHoles*> getPieceNeigthbours(Pieces* t_piece);
 	std::vector<PegHoles*> setNeighbours(Pieces* t_piece);
+	void setPegHoleOccupied(std::vector<Pieces*> t_pieces);
 private:
 	Collisions m_colisions;
 	float m_maxDist = 40.0f;
@@ -38,10 +39,8 @@ private:
 	std::vector<PegHoles*> m_pegHolesVec;
 	std::vector<Raycast*> m_raysVec;
 	std::vector<Raycast*> m_neighboursRaysVec;
-
-
-
 	std::vector<PegHoles*> m_pieceNeighbours;
+	sf::Vector2f m_offset = sf::Vector2f(10, 10);
 	int m_radius = 10;
 	int m_tileSize = 20;
 	int lvl1[ROWS][COLS] = {

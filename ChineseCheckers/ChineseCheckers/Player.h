@@ -23,11 +23,11 @@ private:
 	bool m_sideTop = true;
 	int m_doOnce = 0;
 	int m_maxPlaces = 16;
+	Raycast* m_jumpRay = new Raycast(sf::Vector2f(0, 0), sf::Vector2f(0, 0), 0);;
 	std::vector<Raycast*> m_raysVec;
 	std::vector<Raycast*> m_endRaysVec;
 	std::vector<PegHoles*> m_neighboursVec;
 	std::vector<PegHoles*> m_pegHolesVec;
-	sf::CircleShape testCircle;
 	int m_pegRadius = 10;
 	int m_pieceIndex = 11;
 	int m_pegIndex = 0;
