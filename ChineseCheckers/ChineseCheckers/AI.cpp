@@ -18,7 +18,7 @@ void AI::setUpPieces(sf::RenderWindow& t_window, Board* t_board)
 		if (t_board->getBoardHoles()[i]->getColor() == sf::Color::Green) {}
 		else
 		{
-			m_AIPieces.push_back(new Pieces(t_window, t_board->getBoardHoles()[i -11 ]->getPosition(), sf::Color::Red));
+			m_AIPieces.push_back(new Pieces(t_window, t_board->getBoardHoles()[i]->getPosition(), sf::Color::Red));
 		}
 	}
 }
@@ -40,20 +40,7 @@ void AI::update(Board* t_board)
 {
 
 	m_board = t_board;
-	
-	
-
 	takeTurn();
-	std::vector<PegHoles*> adjacentPegHoles = m_board->getPieceNeigthbours(m_AIPieces.at(0));
-	/*for (PegHoles* adjacentPegHole : adjacentPegHoles)
-	{
-		adjacentPegHole->changeColor(sf::Color::Magenta);
-	}*/
-	
-
-
-
-
 }
 
 void AI::takeTurn()
@@ -68,74 +55,40 @@ void AI::takeTurn()
 
 AiMove AI::bestMove(int t_player, Board t_board, int t_depth = 0)
 {
-	//std::cout << t_depth << std::endl;
 	std::vector<AiMove> moves;
 	for (Pieces* piece : m_AIPieces)
 	{
-		//std::cout << "piece vec Size: " << m_AIPieces.size() << std::endl;
 		sf::Vector2f originalPos = piece->getPosition();
+
+		std::vector<PegHoles*> adjacentPegHoles;
+
+		//Adjacent Peg Holes
+		adjacentPegHoles = m_board->setNeighbours(piece);
+
 		
-
-
-		m_neighboursVec = m_board->setNeighbours(piece);
-		std::cout << "neighboursVec Size: " << m_neighboursVec.size() << std::endl;
-
-
-		//Get array of surrounding peg holes
-		std::vector<PegHoles*> adjacentPegHoles = t_board.getPieceNeigthbours(piece);
-
-
-
 		//Go through each adjacent Hole
-		for (PegHoles* pegHole : adjacentPegHoles)
+		for (PegHoles* pegHole :adjacentPegHoles)
 		{
+			//pegHole->changeColor(sf::Color::Magenta);
+
 			//Create the move
 			AiMove availibleMove;
 
 			//Check Ocupied
 			if (pegHole->getPegOccupied())
 			{
-				//Difference between two vectors
-				//sf::Vector2f vectorToPeghole()
-
-				/*
-				PegHoles* pegHoleOver = pegHole.getPegHoleOver() // <----------------- NEED A FUNCTION RETURNING POINTER TO PEG HOLE THAT IS OVER THE CURRENT ONE
-
-				if(pegHoleOver.isOcupied)
-				{
-					//do nothing
-				}
-				else
-				{
-					if (t_player == m_AI_PLAYER) {
-                    move.score = getBestMove(m_HUMAN_PLAYER).score;
-					} 
-					else {
-                    move.score = getBestMove(m_AI_PLAYER).score;
-					}
-
-					AiMove availibleMove;
-					move.aiPiece = piece;
-					move.destinationPegHole = pegHoleOver;
-
-
-					moves.push_back(availibleMove)
-				}
-				*/
+				//do nothing
 			}
 			else
 			{
-				std::cout << "Called" << std::endl;
 				//Perform Move
 				piece->setPosition(pegHole->getPosition());
-				//m_doOnce = 0;
 
 				availibleMove.aiPiece = piece;
 				availibleMove.destinationPegHole = pegHole;
 				availibleMove.score = rand() % 300;
-			}			
-
-			//Reccusively min max
+			}
+			
 			if (t_depth < MAX_DEPTH)
 			{
 				if (t_player == m_AI_PLAYER) {
@@ -146,12 +99,15 @@ AiMove AI::bestMove(int t_player, Board t_board, int t_depth = 0)
 					availibleMove.score = bestMove(m_AI_PLAYER, t_board, t_depth + 1).score;
 				}
 			}
+			
 
 			//Undo move
 			piece->setPosition(originalPos);
 
 			moves.push_back(availibleMove);
-		}
+		}	
+
+		adjacentPegHoles.clear();
 	}
 
 	// Pick the best move for the current player
@@ -175,8 +131,8 @@ AiMove AI::bestMove(int t_player, Board t_board, int t_depth = 0)
 		}
 	}
 
-	
-	
+
+
 	return moves.at(bestMove);
 }
 
