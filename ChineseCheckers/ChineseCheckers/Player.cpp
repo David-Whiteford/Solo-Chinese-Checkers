@@ -29,10 +29,6 @@ void Player::setUpPieces(sf::RenderWindow& t_window,Board *t_board)
 			}
 		}
 	}
-	testCircle.setPosition(sf::Vector2f(-111, -111));
-	testCircle.setFillColor(sf::Color::Cyan);
-	testCircle.setRadius(2);
-	testCircle.setOrigin(1, 1);
 }
 
 void Player::draw(sf::RenderWindow& t_window)
@@ -46,7 +42,7 @@ void Player::draw(sf::RenderWindow& t_window)
 		t_window.draw(m_endRaysVec[i]->drawRay());
 	}
 
-	t_window.draw(testCircle);
+	
 }
 void Player::grabPiece(sf::RenderWindow& t_window)
 {
@@ -95,6 +91,7 @@ void Player::grabPiece(sf::RenderWindow& t_window)
 
 void Player::placePiece()
 {
+	Raycast* ray = new Raycast(sf::Vector2f(0, 0), sf::Vector2f(0, 0), 0);
 	if (m_pieceHeld)
 	{
 		m_playerPieces[m_pieceIndex]->setPosition(m_newMousePos - m_offset);
@@ -121,8 +118,6 @@ void Player::placePiece()
 					m_endRaysVec[i]->getRayLength() * 2);
 			}
 		}
-
-		testCircle.setPosition(m_newPiecePos);
 		for (int i = 0; i < m_pegHolesVec.size(); i++)
 		{
 			sf::Vector2f point = m_playerPieces[m_pieceIndex]->getPosition();
@@ -133,6 +128,26 @@ void Player::placePiece()
 			}
 			//std::cout << "IS Occupied: " << m_pegHolesVec[i]->getPegOccupied() << std::endl;
 		}
+		for (int i = 0; i < m_playerPieces.size(); i++)
+		{
+			for (int j = 0; j < m_playerPieces.size(); j++)
+			{
+
+				if (i == j) {}
+				else
+				{
+					if (m_colisions.pointCircleCol(m_playerPieces[i]->getPosition(),
+						m_playerPieces[j]->getPosition(), m_pegRadius))
+					{
+						m_jumpRay = new Raycast(ray->getEndPoint(), ray->getDirection(), ray->getRayLength());
+						m_newPiecePos = m_jumpRay->getEndPoint();
+					}
+				}
+
+			}
+		}
+
+		m_pegIndex = 0;
 	}
 	if (m_moseButtonReleased)
 	{
@@ -140,9 +155,10 @@ void Player::placePiece()
 		{
 			m_resetPos[m_pieceIndex] = m_newPiecePos;
 			m_playerPieces[m_pieceIndex]->setPosition(m_newPiecePos);
-			//m_pegHolesVec[m_pegIndex]->setTeamTag("Blue");
-			//m_pegHolesVec[m_pegIndex]->setPegOccupied(true);
+		
 		}
+		sf::Vector2f offset = sf::Vector2f(10, 10);
+		m_board->setPegHoleOccupied(m_playerPieces);
 		m_pieceHeld = false;
 		m_endRaysVec.clear();
 		m_doOnce = 0;

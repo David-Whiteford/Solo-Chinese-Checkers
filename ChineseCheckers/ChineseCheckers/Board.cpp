@@ -133,9 +133,10 @@ void Board::setUpRays()
 						{
 							distance = sqrt(((startPos.x - endPos.x) * (startPos.x - endPos.x))
 								+ (startPos.y - endPos.y) * (startPos.y - endPos.y));
+							//creates a new ray and pushs it to a vector to be stored
+							m_raysVec.push_back(new Raycast(startPos, newDir, distance));
 						}
-						//creates a new ray and pushs it to a vector to be stored
-						m_raysVec.push_back(new Raycast(startPos, newDir, distance));
+						
 					}
 				}
 			}
@@ -198,4 +199,25 @@ std::vector<PegHoles*> Board::setNeighbours(Pieces* t_piece)
 	return m_neighboursVec;
 
 
+}
+
+void Board::setPegHoleOccupied(std::vector<Pieces*> t_pieces)
+{
+	for (int i = 0; i < t_pieces.size(); i++)
+	{
+		for (int j = 0; j < m_pegHolesVec.size(); j++)
+		{
+			if (m_colisions.pointCircleCol(t_pieces[i]->getPosition() + m_offset,
+				m_pegHolesVec[j]->getPosition(), m_radius))
+			{
+				m_pegHolesVec[j]->setPegOccupied(true);
+				m_pegHolesVec[j]->setTeamTag("Blue");
+			}
+			else
+			{
+				m_pegHolesVec[j]->setPegOccupied(false);
+				m_pegHolesVec[j]->setTeamTag("White");
+			}
+		}
+	}
 }
