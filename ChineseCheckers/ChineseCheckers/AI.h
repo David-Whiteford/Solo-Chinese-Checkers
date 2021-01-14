@@ -58,5 +58,7 @@ private:
 
 	int m_scoring(AiMove* t_move);
 
+	std::vector<PegHoles*> m_goalPegHoles;
+
 
 };

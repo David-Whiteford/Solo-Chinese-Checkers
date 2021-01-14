@@ -133,9 +133,9 @@ void Board::setUpRays()
 						{
 							distance = sqrt(((startPos.x - endPos.x) * (startPos.x - endPos.x))
 								+ (startPos.y - endPos.y) * (startPos.y - endPos.y));
+							//creates a new ray and pushs it to a vector to be stored
+							m_raysVec.push_back(new Raycast(startPos, newDir, distance));
 						}
-						//creates a new ray and pushs it to a vector to be stored
-						m_raysVec.push_back(new Raycast(startPos, newDir, distance));
 					}
 				}
 			}
