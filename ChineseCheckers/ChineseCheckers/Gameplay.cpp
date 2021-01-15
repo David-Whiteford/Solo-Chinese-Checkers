@@ -27,6 +27,9 @@ void GamePlay::update(sf::Time t_deltaTime, sf::RenderWindow& t_window)
 		m_player.movePiece(t_window);
 	}
 
+	//m_board->setPegHoleOccupied(m_playerPieces);
+	m_board->setPegHoleOccupied(m_player.getPieces());
+
 	if (m_timer < m_minWaitForTime)
 	{
 		m_timer += t_deltaTime.asMilliseconds();

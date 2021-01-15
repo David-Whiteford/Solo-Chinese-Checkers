@@ -18,6 +18,7 @@ public:
 	void placePiece();
 	void checkEndRaysCol(std::vector<Raycast*> t_pegNeighbours);
 	void pegOccupiedCheck();
+	std::vector<Pieces*> getPieces() { return m_allPieces; };
 
 private:
 	Collisions m_colisions;
