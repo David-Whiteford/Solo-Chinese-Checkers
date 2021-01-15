@@ -31,6 +31,10 @@ public:
 	void setAllPieces(std::vector<Pieces *> t_pieces);
 	std::vector<Pieces*> getAllPieces();
 	std::vector<Raycast*> pegOccupiedCheck(Pieces* t_currentPiece, std::vector<Pieces*> t_pieces);
+
+
+	std::vector<PegHoles*>m_neighboursVec;
+	void clearNeighbours();
 private:
 	Collisions m_colisions;
 	float m_maxDist = 40.0f;

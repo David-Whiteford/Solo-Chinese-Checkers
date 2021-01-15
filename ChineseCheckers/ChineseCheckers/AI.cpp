@@ -82,12 +82,16 @@ void AI::takeTurn()
 
 AiMove AI::bestMove(int t_player, Board t_board, int t_depth = 0)
 {
-
+	//Moves Vector
 	std::vector<AiMove> moves;
+
+	//See moves for all Pieces
 	for (Pieces* piece : m_AIPieces)
 	{
+		//Store original pos
 		sf::Vector2f originalPos = piece->getPosition();
 
+		//vector of all adjacent peg Holes
 		std::vector<PegHoles*> adjacentPegHoles;
 
 		//Adjacent Peg Holes
@@ -96,7 +100,7 @@ AiMove AI::bestMove(int t_player, Board t_board, int t_depth = 0)
 		//Go through each adjacent Hole
 		for (PegHoles* pegHole :adjacentPegHoles)
 		{
-			//pegHole->changeColor(sf::Color::Magenta);
+			pegHole->changeColor(sf::Color::Magenta);
 
 			//Create the move
 			AiMove availibleMove;
@@ -138,7 +142,7 @@ AiMove AI::bestMove(int t_player, Board t_board, int t_depth = 0)
 			//Perform Move
 			piece->setPosition(pegHole->getPosition());
 
-			//MiniMax
+			//Reccursive call
 			if (t_depth < MAX_DEPTH)
 			{			
 				if (t_player == m_AI_PLAYER) {

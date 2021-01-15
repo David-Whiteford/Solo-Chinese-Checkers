@@ -141,9 +141,9 @@ void Board::setUpRays()
 
 std::vector<PegHoles*> Board::setNeighbours(Pieces* t_piece)
 {
-	std::vector<PegHoles*>m_neighboursVec;
-	//m_neighboursVec.clear();
 
+	m_neighboursVec.clear();
+	m_neighboursRaysVec.clear();
 
 	for (int i = 0; i < m_raysVec.size(); i++)
 	{
@@ -193,6 +193,7 @@ void Board::setPegHoleOccupied(std::vector<Pieces*> t_pieces, std::vector<Pieces
 			}
 		}
 	}
+	t_pieces.clear();
 
 	/*
 	for (int i = 0; i < t_pieces.size(); i++)
@@ -267,4 +268,9 @@ std::vector<Raycast*> Board::pegOccupiedCheck(Pieces* t_currentPiece, std::vecto
 	}
 	m_jumpAvailable = 0;
 	return m_endRaysVec;
+}
+
+void Board::clearNeighbours()
+{
+
 }

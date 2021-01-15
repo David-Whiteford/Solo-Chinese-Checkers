@@ -95,9 +95,9 @@ void Player::grabPiece(sf::RenderWindow& t_window)
 	}
 	if (sf::Mouse::isButtonPressed(sf::Mouse::Left) == false)
 	{
+		//If mouse released after piece was held AI turn
 		if (m_pieceHeld)
 		{
-
 			GamePlay::m_currentTurn = Turn::AI;
 		}
 
