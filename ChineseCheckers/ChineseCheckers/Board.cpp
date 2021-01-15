@@ -170,8 +170,10 @@ std::vector<PegHoles*> Board::setNeighbours(Pieces* t_piece)
 
 }
 
-void Board::setPegHoleOccupied(std::vector<Pieces*> t_pieces)
+void Board::setPegHoleOccupied(std::vector<Pieces*> t_pieces, std::vector<Pieces*> t_aiPieces)
 {
+	//Player
+	t_pieces.insert(t_pieces.end(), t_aiPieces.begin(), t_aiPieces.end());
 	for (int j = 0; j < m_pegHolesVec.size(); j++)
 	{
 		for (int i = 0; i < t_pieces.size(); i++)

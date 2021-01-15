@@ -26,7 +26,7 @@ public:
 	//PegHoles* getPegHole(Raycast* t_ray);
 	//std::vector<PegHoles*> getPieceNeigthbours(Pieces* t_piece);
 	std::vector<PegHoles*> setNeighbours(Pieces* t_piece);
-	void setPegHoleOccupied(std::vector<Pieces*> t_pieces);
+	void setPegHoleOccupied(std::vector<Pieces*> t_pieces, std::vector<Pieces*> t_aiPieces);
 	std::vector<Raycast*> setNeighboursRays(Pieces* t_piece);
 	void setAllPieces(std::vector<Pieces *> t_pieces);
 	std::vector<Pieces*> getAllPieces();

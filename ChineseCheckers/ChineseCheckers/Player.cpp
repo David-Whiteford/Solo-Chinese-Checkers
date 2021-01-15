@@ -16,7 +16,7 @@ void Player::movePiece(sf::RenderWindow& t_window)
 	{
 		//std::cout << "Get the peg tag 13: " << m_pegHolesVec[13]->getPegOccupied() << std::endl;
 
-		std::cout << "Get the peg tag 28: " << m_pegHolesVec[28]->getPegOccupied() << std::endl;
+		//std::cout << "Get the peg tag 28: " << m_pegHolesVec[28]->getPegOccupied() << std::endl;
 
 		/*std::cout << "Get the peg tag 49: " << m_pegHolesVec[49]->getPegOccupied() << std::endl;*/
 

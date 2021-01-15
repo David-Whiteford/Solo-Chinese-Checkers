@@ -14,6 +14,7 @@ GamePlay::~GamePlay()
 
 void GamePlay::update(sf::Time t_deltaTime, sf::RenderWindow& t_window)
 {
+	m_board->setPegHoleOccupied(m_player.getPieces(), m_AI.getAIPieces() );
 
 	if (m_currentTurn == Turn::AI)
 	{
@@ -28,7 +29,6 @@ void GamePlay::update(sf::Time t_deltaTime, sf::RenderWindow& t_window)
 	}
 
 	//m_board->setPegHoleOccupied(m_playerPieces);
-	m_board->setPegHoleOccupied(m_player.getPieces());
 
 	if (m_timer < m_minWaitForTime)
 	{
@@ -51,6 +51,7 @@ void GamePlay::update(sf::Time t_deltaTime, sf::RenderWindow& t_window)
 	}
 
 	currentTurn();
+
 	for (Button indicatorButton : m_turnIndicator)
 	{
 		indicatorButton.update(t_deltaTime);

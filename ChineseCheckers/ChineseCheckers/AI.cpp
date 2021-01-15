@@ -96,18 +96,22 @@ AiMove AI::bestMove(int t_player, Board t_board, int t_depth = 0)
 		//Go through each adjacent Hole
 		for (PegHoles* pegHole :adjacentPegHoles)
 		{
-			pegHole->changeColor(sf::Color::Magenta);
+			//pegHole->changeColor(sf::Color::Magenta);
 
 			//Create the move
 			AiMove availibleMove;
 
-			std::cout << pegHole->getPegOccupied() << std::endl;
+			//std::cout << pegHole->getPegOccupied() << std::endl;
 
 			//Check Ocupied
 			if (pegHole->getPegOccupied())
 			{
+				std::cout << "Hitter" << std::endl;
+
+				piece->setPosition(pegHole->getPosition());
+
 				//Get the neighbours of this peghole
-				std::vector<PegHoles*> neighbourOfNeighbour = pegHole->getNeighbours();
+				std::vector<PegHoles*> neighbourOfNeighbour = m_board->setNeighbours(piece);
 
 				for (PegHoles *occupiedNeighbour : neighbourOfNeighbour)
 				{
@@ -119,7 +123,7 @@ AiMove AI::bestMove(int t_player, Board t_board, int t_depth = 0)
 					{
 						//Availible move
 						availibleMove.aiPiece = piece;
-						availibleMove.destinationPegHole = pegHole;
+						availibleMove.destinationPegHole = occupiedNeighbour;
 						availibleMove.score = m_scoring(&availibleMove);
 					}
 				}
@@ -221,11 +225,20 @@ int AI::m_scoring(AiMove* t_move)
 	//Scoring Distance to End goal
 	for (PegHoles* pegHole : m_goalPegHoles)
 	{
-		if (!pegHole->getPegOccupied())
+		
+		if (pegHole->getPegOccupied())
 		{
 			sf::Vector2f goalPos = pegHole->getPosition();
 			sf::Vector2f distanceVecToGoal;
+			sf::Vector2f oldDistanceVecToGoal;
 
+			//Old position distance to goal
+			oldDistanceVecToGoal.x = originalPos.x - goalPos.x;
+			oldDistanceVecToGoal.y = originalPos.y - goalPos.y;
+
+
+
+			//New Position distance to goal
 			distanceVecToGoal.x = destinationPos.x - goalPos.x;
 			distanceVecToGoal.y = destinationPos.y - goalPos.y;
 
@@ -233,27 +246,27 @@ int AI::m_scoring(AiMove* t_move)
 
 			if (distanceToGoal < 21)
 			{
-				score = 14;
+				score = 8;
 			}
 			else if (distanceToGoal < 41)
 			{
-				score += 12;
+				score += 7;
 			}
 			else if (distanceToGoal < 81)
 			{
-				score += 10;
+				score += 6;
 			}
 			else if (distanceToGoal < 121)
 			{
-				score += 8;
+				score += 5;
 			}
 			else if (distanceToGoal < 161)
 			{
-				score += 6;
+				score += 4;
 			}
 			else if (distanceToGoal < 201)
 			{
-				score += 4;
+				score += 3;
 			}
 			else if (distanceToGoal < 241)
 			{

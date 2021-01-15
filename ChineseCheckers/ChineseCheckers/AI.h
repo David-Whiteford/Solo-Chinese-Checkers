@@ -41,7 +41,6 @@ private:
 
 
 
-
 	//The size of the piece radius
 	int m_pegRadius = 10;
 	//const int MAX_PIECES = 10;
