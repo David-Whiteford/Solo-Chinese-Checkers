@@ -29,6 +29,8 @@ public:
 	void takeTurn();
 	AiMove bestMove(int t_player, Board t_board, int t_depth);
 	std::vector<Pieces* > getAIPieces();
+
+	std::vector<PegHoles*> getGoalPegHoles() { return m_goalPegHoles; };
 private:
 	//collision object
 	Collisions m_colisions;

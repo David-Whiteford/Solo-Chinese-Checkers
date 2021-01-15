@@ -215,9 +215,9 @@ int AI::m_scoring(AiMove* t_move)
 	{
 		score += 10;
 	}
-	else if (distanceTravelled >= 40)
+	else if (distanceTravelled >= 21)
 	{
-		score += 4;
+		score += 10;
 	}
 	else if (distanceTravelled > 20)
 	{
@@ -253,42 +253,42 @@ int AI::m_scoring(AiMove* t_move)
 			}
 
 			//Score distance to goal
-			/*
+			
 			if (distanceToGoal < 21)
 			{
-				score = 7;
+				score = 9;
 			}
 			else if (distanceToGoal < 41)
 			{
-				score += 6;
+				score += 8;
 			}
 			else if (distanceToGoal < 81)
 			{
-				score += 5;
+				score += 7;
 			}
-			*/
+			
 			if (distanceToGoal < 121)
 			{
-				score += 4;
+				score += 6;
 			}
 
-			/*
+			
 			else if (distanceToGoal < 161)
 			{
-				score += 3;
+				score += 5;
 			}
 			else if (distanceToGoal < 201)
 			{
-				score += 2;
+				score += 4;
 			}
 			else if (distanceToGoal < 241)
 			{
-				score += 1;
+				score += 3;
 			}
-			*/
+			
 			else if (distanceToGoal < 281)
 			{
-				score += 0;
+				score += 2;
 			}
 		}
 		break;

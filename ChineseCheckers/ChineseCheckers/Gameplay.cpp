@@ -1,5 +1,5 @@
 #include "Gameplay.h"
-
+#include "Game.h"
 
 Turn GamePlay::m_currentTurn{ Turn::AI };
 
@@ -20,7 +20,6 @@ void GamePlay::update(sf::Time t_deltaTime, sf::RenderWindow& t_window)
 	{
 		//Update the AI
 		m_AI.update(m_board);
-		//m_AI.takeTurn();
 	}
 	else
 	{
@@ -28,7 +27,33 @@ void GamePlay::update(sf::Time t_deltaTime, sf::RenderWindow& t_window)
 		m_player.movePiece(t_window);
 	}
 
-	//m_board->setPegHoleOccupied(m_playerPieces);
+
+	//Check Win AI
+	for (Pieces* AIPiece : m_AI.getAIPieces())
+	{
+		for (PegHoles* goalHole : m_AI.getGoalPegHoles())
+		{
+			if (AIPiece->getPosition() == goalHole->getPosition())
+			{
+				checkAIWin();
+			}	
+		}
+	}
+
+	//Check Player Win
+	for (Pieces* playerPiece : m_player.getPieces())
+	{
+		for (PegHoles* goalHole : m_player.getGoalPegHoles())
+		{
+			if (playerPiece->getPosition() == goalHole->getPosition())
+			{
+				checkPlayerWin();
+			}
+		}
+	}
+		
+
+
 
 	if (m_timer < m_minWaitForTime)
 	{
@@ -126,5 +151,48 @@ void GamePlay::m_nextPlayersTurn()
 	else
 	{
 		m_currentTurn = static_cast<Turn>(0);
+	}
+}
+
+void GamePlay::checkAIWin()
+{
+	bool lose = false;
+	for (PegHoles* goalHole : m_AI.getGoalPegHoles())
+	{
+	
+		if (!goalHole->getPegOccupied())
+		{
+			return;
+		}
+		else
+		{
+			lose = true;
+		}
+	}
+	if (lose)
+	{
+		Game::m_currentMode = GameMode::Lose;
+	}
+}
+
+void GamePlay::checkPlayerWin()
+{
+	bool winGame = false;
+	for (PegHoles* goalHole : m_player.getGoalPegHoles())
+	{
+
+		if (!goalHole->getPegOccupied())
+		{
+			return;
+		}
+		else
+		{
+			winGame = true;
+		}
+	}
+	if (winGame)
+	{
+		std::cout << "WinRar" << std::endl;
+		//Game::m_currentMode = GameMode::Win;
 	}
 }

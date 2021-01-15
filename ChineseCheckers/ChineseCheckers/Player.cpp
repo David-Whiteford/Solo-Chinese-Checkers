@@ -15,6 +15,8 @@ void Player::movePiece(sf::RenderWindow& t_window)
 	for (int i = 0; i < m_pegHolesVec.size(); i++)
 	{
 		//std::cout << "Get the peg tag 13: " << m_pegHolesVec[13]->getPegOccupied() << std::endl;
+		//std::cout << "Get the peg tag 11: " << m_pegHolesVec[11]->getPegOccupied() << std::endl;
+
 
 		//std::cout << "Get the peg tag 28: " << m_pegHolesVec[28]->getPegOccupied() << std::endl;
 

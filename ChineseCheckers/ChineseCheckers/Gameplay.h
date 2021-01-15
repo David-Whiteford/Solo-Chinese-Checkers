@@ -47,4 +47,7 @@ private:
 	float m_timer = 0;
 	float m_minWaitForTime = 250;
 
+	void checkAIWin();
+	void checkPlayerWin();
+
 };
