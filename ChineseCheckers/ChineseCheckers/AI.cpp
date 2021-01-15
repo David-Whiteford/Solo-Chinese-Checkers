@@ -20,6 +20,7 @@ void AI::setUpPieces(sf::RenderWindow& t_window, Board* t_board)
 		else
 		{
 			m_AIPieces.push_back(new Pieces(t_window, t_board->getBoardHoles()[i]->getPosition(), sf::Color::Red));
+			m_startingHoles.push_back(t_board->getBoardHoles()[i]);
 		}
 	}
 
@@ -52,6 +53,13 @@ void AI::draw(sf::RenderWindow& t_window)
 		//peghole->changeColor(sf::Color::Yellow);
 	}
 	*/
+
+	/*
+	for (PegHoles* peghole : m_startingHoles)
+	{
+		peghole->changeColor(sf::Color::Cyan);
+	}
+	*/
 	
 }
 
@@ -74,6 +82,7 @@ void AI::takeTurn()
 
 AiMove AI::bestMove(int t_player, Board t_board, int t_depth = 0)
 {
+
 	std::vector<AiMove> moves;
 	for (Pieces* piece : m_AIPieces)
 	{
@@ -83,7 +92,6 @@ AiMove AI::bestMove(int t_player, Board t_board, int t_depth = 0)
 
 		//Adjacent Peg Holes
 		adjacentPegHoles = m_board->setNeighbours(piece);
-
 		
 		//Go through each adjacent Hole
 		for (PegHoles* pegHole :adjacentPegHoles)
@@ -93,27 +101,44 @@ AiMove AI::bestMove(int t_player, Board t_board, int t_depth = 0)
 			//Create the move
 			AiMove availibleMove;
 
+			std::cout << pegHole->getPegOccupied() << std::endl;
+
 			//Check Ocupied
 			if (pegHole->getPegOccupied())
 			{
-				//do nothing
+				//Get the neighbours of this peghole
+				std::vector<PegHoles*> neighbourOfNeighbour = pegHole->getNeighbours();
+
+				for (PegHoles *occupiedNeighbour : neighbourOfNeighbour)
+				{
+					if (occupiedNeighbour->getPegOccupied())
+					{
+						//do nothing
+					}
+					else
+					{
+						//Availible move
+						availibleMove.aiPiece = piece;
+						availibleMove.destinationPegHole = pegHole;
+						availibleMove.score = m_scoring(&availibleMove);
+					}
+				}
 			}
 			else
 			{
-
+				//Availible move
 				availibleMove.aiPiece = piece;
 				availibleMove.destinationPegHole = pegHole;
 				availibleMove.score = m_scoring(&availibleMove);
 
-
-				//Perform Move
-				piece->setPosition(pegHole->getPosition());
 			}
-			
+
+			//Perform Move
+			piece->setPosition(pegHole->getPosition());
+
+			//MiniMax
 			if (t_depth < MAX_DEPTH)
-			{
-	
-			
+			{			
 				if (t_player == m_AI_PLAYER) {
 						availibleMove.score = bestMove(m_HUMAN_PLAYER, t_board, t_depth + 1).score;
 					}
@@ -121,13 +146,10 @@ AiMove AI::bestMove(int t_player, Board t_board, int t_depth = 0)
 						availibleMove.score = bestMove(m_AI_PLAYER, t_board, t_depth + 1).score;
 					}
 				}
-			
-
-			//Undo move
+			//Undo Move
 			piece->setPosition(originalPos);
-
+			//Add Move to Moves
 			moves.push_back(availibleMove);
-	
 		}	
 
 	}
@@ -143,7 +165,6 @@ AiMove AI::bestMove(int t_player, Board t_board, int t_depth = 0)
 			}
 		}
 	}
-	
 	else {
 		int bestScore = 1000000;
 		for (int i = 0; i < moves.size(); i++) {
@@ -154,9 +175,7 @@ AiMove AI::bestMove(int t_player, Board t_board, int t_depth = 0)
 		}
 	}
 
-	return moves.at(bestMove);
-
-	
+	return moves.at(bestMove);	
 }
 
 
@@ -188,23 +207,20 @@ int AI::m_scoring(AiMove* t_move)
 	//Scoring Distance Travlled
 	if (distanceTravelled >= 60)
 	{
-		score += 5;
-		std::cout << "Checking " << std::endl;
+		score += 3;
 	}
 	else if (distanceTravelled >= 40)
 	{
-		score += 3;
+		score += 2;
 	}
 	else if (distanceTravelled > 20)
 	{
 		score += 1;
 	}
 
-	//Distance to End goal
+	//Scoring Distance to End goal
 	for (PegHoles* pegHole : m_goalPegHoles)
 	{
-
-
 		if (!pegHole->getPegOccupied())
 		{
 			sf::Vector2f goalPos = pegHole->getPosition();
@@ -217,27 +233,27 @@ int AI::m_scoring(AiMove* t_move)
 
 			if (distanceToGoal < 21)
 			{
-				score = 0;
+				score = 14;
 			}
 			else if (distanceToGoal < 41)
 			{
-				score += 0;
+				score += 12;
 			}
 			else if (distanceToGoal < 81)
 			{
-				score += 6;
+				score += 10;
 			}
 			else if (distanceToGoal < 121)
 			{
-				score += 5;
+				score += 8;
 			}
 			else if (distanceToGoal < 161)
 			{
-				score += 4;
+				score += 6;
 			}
 			else if (distanceToGoal < 201)
 			{
-				score += 3;
+				score += 4;
 			}
 			else if (distanceToGoal < 241)
 			{
@@ -248,8 +264,37 @@ int AI::m_scoring(AiMove* t_move)
 				score += 1;
 			}
 		}
+		break;
+	}
+
+	float y = 0;
+
+	//Scoring furthest back
+	for (Pieces* piece : m_AIPieces)
+	{
+		if (piece->getPosition().y > y)
+		{
+			y = piece->getPosition().y;
+		}
+	}
+
+	if (y == t_move->aiPiece->getPosition().y)
+	{
+		score += 2;
 	}
 	return score;
+
+	//Scoring Getting off Starting zone
+	for (PegHoles* peghole : m_startingHoles)
+	{
+		if (peghole->getPosition() == t_move->aiPiece->getPosition())
+		{
+			std::cout << "Hitter" << std::endl;
+			score += 5;
+			break;
+		}
+	}
+
 }
 
 std::vector<Pieces*> AI::getAIPieces()

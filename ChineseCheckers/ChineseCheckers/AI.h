@@ -37,6 +37,7 @@ private:
 	std::vector<PegHoles*> m_pegHolesVec;
 	std::vector<Raycast*> m_endrays;
 	std::vector<Raycast*> m_raysVec;
+	std::vector<PegHoles*> m_startingHoles;
 
 
 
@@ -54,7 +55,7 @@ private:
 	void performMove(AiMove t_move, Board t_board);
 	void undoMove(AiMove t_move);
 	sf::Vector2f m_offset = sf::Vector2f(10, 10);
-	int MAX_DEPTH = 1;
+	int MAX_DEPTH = 0;
 
 	int m_scoring(AiMove* t_move);
 
