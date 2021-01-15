@@ -177,15 +177,17 @@ void Board::setPegHoleOccupied(std::vector<Pieces*> t_pieces)
 		for (int j = 0; j < m_pegHolesVec.size(); j++)
 		{
 			if (m_colisions.pointCircleCol(t_pieces[i]->getPosition() + m_offset,
-				m_pegHolesVec[j]->getPosition(), m_radius))
-			{
-				m_pegHolesVec[j]->setPegOccupied(true);
-				m_pegHolesVec[j]->setTeamTag("Blue");
-			}
-			else
+				m_pegHolesVec[j]->getPosition(), m_radius) == false)
 			{
 				m_pegHolesVec[j]->setPegOccupied(false);
 				m_pegHolesVec[j]->setTeamTag("White");
+			}
+			else if (m_colisions.pointCircleCol(t_pieces[i]->getPosition() + m_offset,
+				m_pegHolesVec[j]->getPosition(), m_radius) == true)
+			{
+				m_pegHolesVec[j]->setPegOccupied(true);
+				m_pegHolesVec[j]->setTeamTag("Blue");
+
 			}
 		}
 	}

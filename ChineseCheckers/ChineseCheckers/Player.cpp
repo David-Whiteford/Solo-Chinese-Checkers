@@ -12,6 +12,17 @@ void Player::movePiece(sf::RenderWindow& t_window)
 {
 	grabPiece(t_window);
 	placePiece();
+	m_board->setPegHoleOccupied(m_playerPieces);
+	for (int i = 0; i < m_pegHolesVec.size(); i++)
+	{
+		std::cout << "Get the peg tag 13: " << m_pegHolesVec[13]->getPegOccupied() << std::endl;
+
+		std::cout << "Get the peg tag 28: " << m_pegHolesVec[28]->getPegOccupied() << std::endl;
+
+		/*std::cout << "Get the peg tag 49: " << m_pegHolesVec[49]->getPegOccupied() << std::endl;*/
+
+	}
+
 }
 
 void Player::setUpPieces(sf::RenderWindow& t_window,Board *t_board)
@@ -134,7 +145,6 @@ void Player::placePiece()
 	{
 		m_resetPos[m_pieceIndex] = m_newPiecePos;
 		m_playerPieces[m_pieceIndex]->setPosition(m_newPiecePos);
-		m_board->setPegHoleOccupied(m_playerPieces);
 		m_pieceHeld = false;
 		m_endRaysVec.clear();
 		m_doOnce = 0;
