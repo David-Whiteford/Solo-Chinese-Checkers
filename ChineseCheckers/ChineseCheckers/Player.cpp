@@ -90,10 +90,17 @@ void Player::grabPiece(sf::RenderWindow& t_window)
 			m_pieceHeld = true;
 			m_moseButtonReleased = false;
 			m_currentPress++;
+
 		}
 	}
 	if (sf::Mouse::isButtonPressed(sf::Mouse::Left) == false)
 	{
+		if (m_pieceHeld)
+		{
+
+			GamePlay::m_currentTurn = Turn::AI;
+		}
+
 		m_pieceHeld = false;
 		if (m_currentPress == 1)
 		{
@@ -160,8 +167,8 @@ void Player::placePiece()
 		m_endRaysVec.clear();
 		m_doOnce = 0;
 		m_jumpAvailable = 0;
-		//GamePlay::m_currentTurn = Turn::AI;
 	}
+
 }
 void Player::pegOccupiedCheck()
 {

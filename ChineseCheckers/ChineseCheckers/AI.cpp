@@ -20,7 +20,7 @@ void AI::setUpPieces(sf::RenderWindow& t_window, Board* t_board)
 		else
 		{
 			m_AIPieces.push_back(new Pieces(t_window, t_board->getBoardHoles()[i]->getPosition(), sf::Color::Red));
-			m_startingHoles.push_back(t_board->getBoardHoles()[i]);
+			m_startingHoles.push_back(*t_board->getBoardHoles()[i]);
 		}
 	}
 
@@ -106,8 +106,6 @@ AiMove AI::bestMove(int t_player, Board t_board, int t_depth = 0)
 			//Check Ocupied
 			if (pegHole->getPegOccupied())
 			{
-				std::cout << "Hitter" << std::endl;
-
 				piece->setPosition(pegHole->getPosition());
 
 				//Get the neighbours of this peghole
@@ -211,15 +209,15 @@ int AI::m_scoring(AiMove* t_move)
 	//Scoring Distance Travlled
 	if (distanceTravelled >= 60)
 	{
-		score += 3;
+		score += 10;
 	}
 	else if (distanceTravelled >= 40)
 	{
-		score += 2;
+		score += 4;
 	}
 	else if (distanceTravelled > 20)
 	{
-		score += 1;
+		score += 2;
 	}
 
 	//Scoring Distance to End goal
@@ -236,7 +234,7 @@ int AI::m_scoring(AiMove* t_move)
 			oldDistanceVecToGoal.x = originalPos.x - goalPos.x;
 			oldDistanceVecToGoal.y = originalPos.y - goalPos.y;
 
-
+			float oldDistanceToGoal = std::sqrt(oldDistanceVecToGoal.x * oldDistanceVecToGoal.x + oldDistanceVecToGoal.y * oldDistanceVecToGoal.y);
 
 			//New Position distance to goal
 			distanceVecToGoal.x = destinationPos.x - goalPos.x;
@@ -244,45 +242,56 @@ int AI::m_scoring(AiMove* t_move)
 
 			float distanceToGoal = std::sqrt(distanceVecToGoal.x * distanceVecToGoal.x + distanceVecToGoal.y * distanceVecToGoal.y);
 
+			//Score new distance being further away
+			if (oldDistanceToGoal < distanceToGoal)
+			{
+				score -= 100;
+			}
+
+			//Score distance to goal
+			/*
 			if (distanceToGoal < 21)
 			{
-				score = 8;
+				score = 7;
 			}
 			else if (distanceToGoal < 41)
 			{
-				score += 7;
+				score += 6;
 			}
 			else if (distanceToGoal < 81)
 			{
-				score += 6;
-			}
-			else if (distanceToGoal < 121)
-			{
 				score += 5;
 			}
-			else if (distanceToGoal < 161)
+			*/
+			if (distanceToGoal < 121)
 			{
 				score += 4;
 			}
-			else if (distanceToGoal < 201)
+
+			/*
+			else if (distanceToGoal < 161)
 			{
 				score += 3;
 			}
-			else if (distanceToGoal < 241)
+			else if (distanceToGoal < 201)
 			{
 				score += 2;
 			}
-			else if (distanceToGoal < 281)
+			else if (distanceToGoal < 241)
 			{
 				score += 1;
+			}
+			*/
+			else if (distanceToGoal < 281)
+			{
+				score += 0;
 			}
 		}
 		break;
 	}
 
-	float y = 0;
-
 	//Scoring furthest back
+	float y = 0;
 	for (Pieces* piece : m_AIPieces)
 	{
 		if (piece->getPosition().y > y)
@@ -293,21 +302,22 @@ int AI::m_scoring(AiMove* t_move)
 
 	if (y == t_move->aiPiece->getPosition().y)
 	{
-		score += 2;
+		score += 10;
 	}
-	return score;
+	
 
+	/*
 	//Scoring Getting off Starting zone
-	for (PegHoles* peghole : m_startingHoles)
+	for (PegHoles startPeghole : m_startingHoles)
 	{
-		if (peghole->getPosition() == t_move->aiPiece->getPosition())
+		if (startPeghole.getPosition() == t_move->aiPiece->getPosition())
 		{
-			std::cout << "Hitter" << std::endl;
-			score += 5;
-			break;
+			score += 1;
 		}
 	}
+	*/
 
+	return score;
 }
 
 std::vector<Pieces*> AI::getAIPieces()
