@@ -28,7 +28,7 @@ public:
 	//Movement
 	void takeTurn();
 	AiMove bestMove(int t_player, Board t_board, int t_depth);
-
+	std::vector<Pieces* > getAIPieces();
 private:
 	//collision object
 	Collisions m_colisions;

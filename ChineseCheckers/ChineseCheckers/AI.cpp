@@ -12,6 +12,7 @@ AI::~AI()
 
 void AI::setUpPieces(sf::RenderWindow& t_window, Board* t_board)
 {
+	m_board = t_board;
 	m_pegHolesVec = t_board->getBoardHoles();
 	for (int i = t_board->getBoardHoles().size() - 1; i > t_board->getBoardHoles().size() - m_places -7;--i)
 	{
@@ -30,7 +31,7 @@ void AI::setUpPieces(sf::RenderWindow& t_window, Board* t_board)
 			m_goalPegHoles.push_back(t_board->getBoardHoles()[i]);
 		}
 	}
-
+	m_board->setAllPieces(m_AIPieces);
 }
 
 void AI::draw(sf::RenderWindow& t_window)
@@ -158,6 +159,8 @@ AiMove AI::bestMove(int t_player, Board t_board, int t_depth = 0)
 	
 }
 
+
+
 void AI::performMove(AiMove t_move, Board t_board)
 {
 	t_move.aiPiece->setPosition(t_move.destinationPegHole->getPosition());
@@ -249,4 +252,7 @@ int AI::m_scoring(AiMove* t_move)
 	return score;
 }
 
-
+std::vector<Pieces*> AI::getAIPieces()
+{
+	return m_AIPieces;
+}

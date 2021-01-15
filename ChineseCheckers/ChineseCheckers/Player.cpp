@@ -29,6 +29,10 @@ void Player::setUpPieces(sf::RenderWindow& t_window,Board *t_board)
 			}
 		}
 	}
+	for (int i = 0; i < m_playerPieces.size(); i++) {
+		m_allPieces.push_back(m_playerPieces[i]);
+	}
+	m_board->setAllPieces(m_playerPieces);
 }
 
 void Player::draw(sf::RenderWindow& t_window)
@@ -112,6 +116,7 @@ void Player::placePiece()
 	{
 		m_playerPieces[m_pieceIndex]->setPosition(m_newMousePos - m_offset);
 		pegOccupiedCheck();
+		//m_endRaysVec = m_board->pegOccupiedCheck(m_playerPieces[m_pieceIndex],m_playerPieces);
 		checkEndRaysCol(m_endRaysVec);
 
 		for (int i = 0; i < m_pegHolesVec.size(); i++)
@@ -138,16 +143,17 @@ void Player::placePiece()
 }
 void Player::pegOccupiedCheck()
 {
+	m_allPieces = m_board->getAllPieces();
 	for (int i = 0; i < m_playerPieces.size(); i++)
 	{
-		for (int j = 0; j < m_playerPieces.size(); j++)
+		for (int j = 0; j < m_allPieces.size(); j++)
 		{
 			if (i == j) {}
 			else
 			{
 
 				if (m_colisions.pointCircleCol(m_playerPieces[i]->getPosition() + m_offset,
-					m_playerPieces[j]->getPosition(), m_pegRadius))
+					m_allPieces[j]->getPosition(), m_pegRadius))
 				{
 					if (m_jumpAvailable == 0)
 					{

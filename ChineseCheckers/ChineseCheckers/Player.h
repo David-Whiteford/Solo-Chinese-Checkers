@@ -4,6 +4,7 @@
 #include "Collisions.h"
 #include "Pieces.h"
 #include "Board.h"
+#include "AI.h"
 
 class Player
 {
@@ -21,6 +22,7 @@ public:
 private:
 	Collisions m_colisions;
 	Board* m_board;
+	AI m_aiPieces;
 	std::vector<Pieces*> m_playerPieces;
 	int m_index = 0;
 	bool m_sideTop = true;
@@ -31,6 +33,9 @@ private:
 	std::vector<Raycast*> m_endRaysVec;
 	std::vector<PegHoles*> m_neighboursVec;
 	std::vector<PegHoles*> m_pegHolesVec;
+	std::vector<Pieces*> m_aiPiecesVec;
+	std::vector<Pieces*> m_allPieces;
+	std::vector<PegHoles*> m_goalPegHoles;
 	int m_pegRadius = 10;
 	int m_pieceIndex = 11;
 	int m_pegIndex = 0;

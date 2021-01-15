@@ -152,9 +152,6 @@ std::vector<PegHoles*> Board::setNeighbours(Pieces* t_piece)
 			m_neighboursRaysVec.push_back(m_raysVec[i]);
 		}
 	}
-
-	
-
 	for (int i = 0; i < m_pegHolesVec.size(); i++)
 	{
 		for (int j = 0; j < m_neighboursRaysVec.size(); j++)
@@ -168,7 +165,6 @@ std::vector<PegHoles*> Board::setNeighbours(Pieces* t_piece)
 	}
 
 	m_neighboursRaysVec.clear();
-
 	return m_neighboursVec;
 
 
@@ -197,8 +193,6 @@ void Board::setPegHoleOccupied(std::vector<Pieces*> t_pieces)
 std::vector<Raycast*> Board::setNeighboursRays(Pieces* t_piece)
 {
 	m_neighboursRaysVec.clear();
-	std::vector<PegHoles*>m_neighboursVec;
-
 	for (int i = 0; i < m_raysVec.size(); i++)
 	{
 		if (m_colisions.pointCircleCol(m_raysVec[i]->getRayStartPos(), t_piece->getPosition(), m_radius))
@@ -208,4 +202,44 @@ std::vector<Raycast*> Board::setNeighboursRays(Pieces* t_piece)
 	}
 
 	return m_neighboursRaysVec;
+}
+
+void Board::setAllPieces(std::vector<Pieces*> t_pieces)
+{
+	for (Pieces* pieces : t_pieces)
+	{
+		m_allPiece.push_back(pieces);
+	}
+}
+
+std::vector<Pieces*> Board::getAllPieces()
+{
+	return m_allPiece;
+}
+std::vector<Raycast*> Board::pegOccupiedCheck(Pieces* t_currentPiece, std::vector<Pieces*> t_pieces)
+{
+	m_endRaysVec.clear();
+	for (int i = 0; i < t_pieces.size(); i++)
+	{
+		for (int j = 0; j < m_allPiece.size(); j++)
+		{
+			if (i == j) {}
+			else
+			{
+				if (m_colisions.pointCircleCol(t_pieces[i]->getPosition() + m_offset,
+					m_allPiece[j]->getPosition(), m_radius))
+				{
+					if (m_jumpAvailable == 0)
+					{
+						m_endRaysVec = setNeighboursRays(t_currentPiece);
+						m_jumpAvailable++;
+
+					}
+				}
+			}
+
+		}
+	}
+	m_jumpAvailable = 0;
+	return m_endRaysVec;
 }
