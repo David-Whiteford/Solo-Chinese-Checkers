@@ -1,5 +1,5 @@
 #include "Player.h"
-
+#include "Gameplay.h"
 Player::Player()
 {
 }
@@ -12,16 +12,6 @@ void Player::movePiece(sf::RenderWindow& t_window)
 {
 	grabPiece(t_window);
 	placePiece();
-	for (int i = 0; i < m_pegHolesVec.size(); i++)
-	{
-		//std::cout << "Get the peg tag 13: " << m_pegHolesVec[13]->getPegOccupied() << std::endl;
-
-		std::cout << "Get the peg tag 28: " << m_pegHolesVec[28]->getPegOccupied() << std::endl;
-
-		/*std::cout << "Get the peg tag 49: " << m_pegHolesVec[49]->getPegOccupied() << std::endl;*/
-
-	}
-
 }
 
 void Player::setUpPieces(sf::RenderWindow& t_window,Board *t_board)
@@ -42,6 +32,14 @@ void Player::setUpPieces(sf::RenderWindow& t_window,Board *t_board)
 	for (int i = 0; i < m_playerPieces.size(); i++) {
 		m_allPieces.push_back(m_playerPieces[i]);
 	}
+	for (int i = t_board->getBoardHoles().size() - 1; i > t_board->getBoardHoles().size() - 10 - 7; --i)
+	{
+		if (t_board->getBoardHoles()[i]->getColor() == sf::Color::Green) {}
+		else
+		{
+			m_goalPegHoles.push_back(t_board->getBoardHoles()[i]);
+		}
+	}
 	m_board->setAllPieces(m_playerPieces);
 }
 
@@ -55,7 +53,11 @@ void Player::draw(sf::RenderWindow& t_window)
 	{
 		t_window.draw(m_endRaysVec[i]->drawRay());
 	}
-
+	for (int i = 0; i < m_goalPegHoles.size(); i++)
+	{
+		m_goalPegHoles[i]->changeColor(sf::Color::Yellow);
+		m_goalPegHoles[i]->draw();
+	}
 	
 }
 void Player::grabPiece(sf::RenderWindow& t_window)
@@ -148,6 +150,7 @@ void Player::placePiece()
 		m_endRaysVec.clear();
 		m_doOnce = 0;
 		m_jumpAvailable = 0;
+		//GamePlay::m_currentTurn = Turn::AI;
 	}
 }
 void Player::pegOccupiedCheck()
