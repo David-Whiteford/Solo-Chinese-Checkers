@@ -1,7 +1,7 @@
 #include "Gameplay.h"
 #include "Game.h"
 
-Turn GamePlay::m_currentTurn{ Turn::AI };
+Turn GamePlay::m_currentTurn{ Turn::Player };
 
 GamePlay::GamePlay()
 {
@@ -14,8 +14,9 @@ GamePlay::~GamePlay()
 
 void GamePlay::update(sf::Time t_deltaTime, sf::RenderWindow& t_window)
 {
-	m_board->setPegHoleOccupied(m_player.getPieces(), m_AI.getAIPieces() );
 
+
+	m_board->setPegHoleOccupied(m_player.getPieces(), m_AI.getAIPieces());
 	if (m_currentTurn == Turn::AI)
 	{
 		//Update the AI
@@ -178,7 +179,7 @@ void GamePlay::checkAIWin()
 void GamePlay::checkPlayerWin()
 {
 	bool winGame = false;
-	for (PegHoles* goalHole : m_player.getGoalPegHoles())
+	for (PegHoles* goalHole : m_AI.getStartHoles())
 	{
 
 		if (!goalHole->getPegOccupied())
@@ -192,7 +193,6 @@ void GamePlay::checkPlayerWin()
 	}
 	if (winGame)
 	{
-		std::cout << "WinRar" << std::endl;
 		//Game::m_currentMode = GameMode::Win;
 	}
 }

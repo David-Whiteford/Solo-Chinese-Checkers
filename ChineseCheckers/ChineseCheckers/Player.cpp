@@ -67,8 +67,8 @@ void Player::draw(sf::RenderWindow& t_window)
 	}
 	for (int i = 0; i < m_goalPegHoles.size(); i++)
 	{
-		m_goalPegHoles[i]->changeColor(sf::Color::Yellow);
-		m_goalPegHoles[i]->draw();
+		//m_goalPegHoles[i]->changeColor(sf::Color::Yellow);
+		//m_goalPegHoles[i]->draw();
 	}
 	
 }

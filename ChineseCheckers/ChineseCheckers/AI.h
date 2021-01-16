@@ -23,7 +23,7 @@ public:
 	~AI();
 	void setUpPieces(sf::RenderWindow& t_window, Board* t_board);
 	void draw(sf::RenderWindow& t_window);
-	void update(Board * t_board);
+	void update(Board* t_board);
 
 	//Movement
 	void takeTurn();
@@ -31,6 +31,7 @@ public:
 	std::vector<Pieces* > getAIPieces();
 
 	std::vector<PegHoles*> getGoalPegHoles() { return m_goalPegHoles; };
+	std::vector<PegHoles*> getStartHoles() { return m_startingHoles; };
 private:
 	//collision object
 	Collisions m_colisions;
@@ -39,7 +40,7 @@ private:
 	std::vector<PegHoles*> m_pegHolesVec;
 	std::vector<Raycast*> m_endrays;
 	std::vector<Raycast*> m_raysVec;
-	std::vector<PegHoles> m_startingHoles;
+	std::vector<PegHoles*> m_startingHoles;
 
 
 

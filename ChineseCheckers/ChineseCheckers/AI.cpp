@@ -20,7 +20,7 @@ void AI::setUpPieces(sf::RenderWindow& t_window, Board* t_board)
 		else
 		{
 			m_AIPieces.push_back(new Pieces(t_window, t_board->getBoardHoles()[i]->getPosition(), sf::Color::Red));
-			m_startingHoles.push_back(*t_board->getBoardHoles()[i]);
+			m_startingHoles.push_back(t_board->getBoardHoles()[i]);
 		}
 	}
 
@@ -100,7 +100,7 @@ AiMove AI::bestMove(int t_player, Board t_board, int t_depth = 0)
 		//Go through each adjacent Hole
 		for (PegHoles* pegHole :adjacentPegHoles)
 		{
-			pegHole->changeColor(sf::Color::Magenta);
+			//pegHole->changeColor(sf::Color::Magenta);
 
 			//Create the move
 			AiMove availibleMove;
@@ -217,7 +217,7 @@ int AI::m_scoring(AiMove* t_move)
 	}
 	else if (distanceTravelled >= 21)
 	{
-		score += 10;
+		score += 20;
 	}
 	else if (distanceTravelled > 20)
 	{
@@ -249,7 +249,7 @@ int AI::m_scoring(AiMove* t_move)
 			//Score new distance being further away
 			if (oldDistanceToGoal < distanceToGoal)
 			{
-				score -= 100;
+				score -= 10;
 			}
 
 			//Score distance to goal
@@ -310,16 +310,16 @@ int AI::m_scoring(AiMove* t_move)
 	}
 	
 
-	/*
+	
 	//Scoring Getting off Starting zone
-	for (PegHoles startPeghole : m_startingHoles)
+	for (PegHoles* startPeghole : m_startingHoles)
 	{
-		if (startPeghole.getPosition() == t_move->aiPiece->getPosition())
+		if (startPeghole->getPosition() == t_move->aiPiece->getPosition())
 		{
 			score += 1;
 		}
 	}
-	*/
+	
 
 	return score;
 }

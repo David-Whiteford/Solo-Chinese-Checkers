@@ -193,7 +193,7 @@ void Board::setPegHoleOccupied(std::vector<Pieces*> t_pieces, std::vector<Pieces
 			}
 		}
 	}
-	t_pieces.clear();
+	//t_pieces.clear();
 
 	/*
 	for (int i = 0; i < t_pieces.size(); i++)
